@@ -17,12 +17,12 @@ public class OutlookFolder extends Outlook implements Countable<OutlookItem>
 
     private Dispatch getItemsDispatch()
     {
-        return cache.computeIfAbsent("Items", key -> Dispatch.get(dispatch, key).getDispatch());
+        return cache.computeIfAbsent("Items", this::getDispatch);
     }
 
     private Dispatch getFoldersDispatch()
     {
-        return cache.computeIfAbsent("Folders", key -> Dispatch.get(dispatch, key).getDispatch());
+        return cache.computeIfAbsent("Folders", this::getDispatch);
     }
 
     private int getCount(Dispatch objects)

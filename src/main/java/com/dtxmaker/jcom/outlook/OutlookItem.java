@@ -39,8 +39,7 @@ public class OutlookItem extends Outlook
      */
     public OutlookAttachments getAttachments()
     {
-        Dispatch dispatch = Dispatch.get(this.dispatch, "Attachments").getDispatch();
-        return new OutlookAttachments(application, dispatch);
+        return new OutlookAttachments(application, getDispatch("Attachments"));
     }
 
     /**

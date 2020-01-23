@@ -419,8 +419,7 @@ public class OutlookMail extends OutlookItem
 
     public OutlookFolder getSaveSentMessageFolder()
     {
-        Dispatch folder = Dispatch.get(dispatch, "SaveSentMessageFolder").getDispatch();
-        return new OutlookFolder(application, folder);
+        return new OutlookFolder(application, getDispatch("SaveSentMessageFolder"));
     }
 
     public void setSensitivity(OutlookSensitivity sensitivity)

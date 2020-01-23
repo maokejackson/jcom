@@ -53,6 +53,11 @@ abstract class Outlook
         Dispatch.put(dispatch, name, value);
     }
 
+    final Dispatch getDispatch(String name)
+    {
+        return Dispatch.get(dispatch, name).getDispatch();
+    }
+
     final String getString(String name)
     {
         return Dispatch.get(dispatch, name).getString();
