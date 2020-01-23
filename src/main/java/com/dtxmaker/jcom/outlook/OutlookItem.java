@@ -1,7 +1,6 @@
 package com.dtxmaker.jcom.outlook;
 
 import com.dtxmaker.jcom.outlook.constant.OutlookDefaultFolderType;
-import com.dtxmaker.jcom.outlook.constant.OutlookObjectClass;
 import com.jacob.com.Dispatch;
 
 public class OutlookItem extends Outlook
@@ -76,16 +75,5 @@ public class OutlookItem extends Outlook
     public void delete()
     {
         moveTo(OutlookDefaultFolderType.DELETED_ITEMS);
-    }
-
-    /**
-     * Test if this item belongs to specific object class.
-     *
-     * @param objectClass the desired object class to check
-     * @return <code>true</code> when this item belongs to specific object class.
-     */
-    public boolean isObject(OutlookObjectClass objectClass)
-    {
-        return getObjectClass() == objectClass.getValue();
     }
 }

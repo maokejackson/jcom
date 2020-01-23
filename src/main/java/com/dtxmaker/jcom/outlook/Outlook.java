@@ -1,10 +1,12 @@
 package com.dtxmaker.jcom.outlook;
 
+import com.dtxmaker.jcom.outlook.constant.OutlookObjectClass;
 import com.jacob.com.Dispatch;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 abstract class Outlook
 {
@@ -13,15 +15,21 @@ abstract class Outlook
 
     final Map<String, Dispatch> cache = new HashMap<>();
 
+    Outlook(Dispatch dispatch)
+    {
+        this(null, dispatch);
+    }
+
     Outlook(OutlookApplication application, Dispatch dispatch)
     {
         this.application = application;
-        this.dispatch = dispatch;
+        this.dispatch = Objects.requireNonNull(dispatch);
     }
 
-    final OutlookApplication getApplication()
+    public final OutlookObjectClass getObjectClass()
     {
-        return application;
+        int value = Dispatch.get(dispatch, "Class").getInt();
+        return OutlookObjectClass.findByValue(value);
     }
 
     final Dispatch getDispatch()
@@ -45,11 +53,6 @@ abstract class Outlook
         Dispatch.put(dispatch, name, value);
     }
 
-    final int getObjectClass()
-    {
-        return Dispatch.get(dispatch, "Class").getInt();
-    }
-
     final String getString(String name)
     {
         return Dispatch.get(dispatch, name).getString();
@@ -63,5 +66,10 @@ abstract class Outlook
     final Date getDate(String name)
     {
         return Dispatch.get(dispatch, name).getJavaDate();
+    }
+
+    final boolean getBoolean(String name)
+    {
+        return Dispatch.get(dispatch, name).getBoolean();
     }
 }

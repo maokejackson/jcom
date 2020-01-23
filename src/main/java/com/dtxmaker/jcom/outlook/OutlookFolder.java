@@ -129,7 +129,7 @@ public class OutlookFolder extends Outlook implements Countable<OutlookItem>
         {
             T item = getItemAt(index, type);
 
-            if (objectClass == null || item.getObjectClass() == objectClass.getValue())
+            if (objectClass == null || item.getObjectClass() == objectClass)
             {
                 items.add(item);
             }

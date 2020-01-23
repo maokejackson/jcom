@@ -1,25 +1,23 @@
 package com.dtxmaker.jcom.outlook;
 
+import com.dtxmaker.jcom.library.LanguageSettings;
 import com.dtxmaker.jcom.outlook.constant.OutlookDefaultFolderType;
 import com.dtxmaker.jcom.outlook.constant.OutlookItemType;
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.ComFailException;
 import com.jacob.com.Dispatch;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static com.dtxmaker.jcom.outlook.constant.OutlookItemType.CONTACT;
 import static com.dtxmaker.jcom.outlook.constant.OutlookItemType.MAIL;
 
-public class OutlookApplication
+/**
+ * https://docs.microsoft.com/en-us/office/vba/api/overview/outlook
+ */
+public class OutlookApplication extends Outlook
 {
     private static final String OUTLOOK_APPLICATION = "Outlook.Application";
 
-    private final Dispatch dispatch;
     private final Dispatch namespace;
-
-    private final Map<String, Dispatch> cache = new HashMap<>();
 
     public static boolean isInstalled()
     {
@@ -36,9 +34,38 @@ public class OutlookApplication
 
     public OutlookApplication()
     {
-        ActiveXComponent component = new ActiveXComponent(OUTLOOK_APPLICATION);
-        dispatch = component.getObject();
+        super(new ActiveXComponent(OUTLOOK_APPLICATION));
         namespace = Dispatch.call(dispatch, "GetNamespace", "MAPI").toDispatch();
+    }
+
+    public String getDefaultProfileName()
+    {
+        return getString("DefaultProfileName");
+    }
+
+    public boolean isTrusted()
+    {
+        return getBoolean("IsTrusted");
+    }
+
+    public LanguageSettings getLanguageSettings()
+    {
+        return new LanguageSettings(Dispatch.call(dispatch, "LanguageSettings").toDispatch());
+    }
+
+    public String getName()
+    {
+        return getString("Name");
+    }
+
+    public String getProductCode()
+    {
+        return getString("ProductCode");
+    }
+
+    public String getVersion()
+    {
+        return getString("Version");
     }
 
     private Dispatch createItem(OutlookItemType itemType)
