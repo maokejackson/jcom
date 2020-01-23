@@ -1,6 +1,8 @@
 package com.dtxmaker.jcom.outlook;
 
+import com.dtxmaker.jcom.Constant;
 import com.dtxmaker.jcom.outlook.constant.OutlookObjectClass;
+import com.dtxmaker.jcom.util.EnumUtils;
 import com.jacob.com.Dispatch;
 
 import java.util.Date;
@@ -43,12 +45,12 @@ abstract class Outlook
         Dispatch.put(dispatch, name, value);
     }
 
-    final void put(String name, int value)
+    final void put(String name, Constant value)
     {
-        Dispatch.put(dispatch, name, value);
+        Dispatch.put(dispatch, name, value.getValue());
     }
 
-    final void put(String name, Date value)
+    final void put(String name, Object value)
     {
         Dispatch.put(dispatch, name, value);
     }
@@ -71,5 +73,11 @@ abstract class Outlook
     final boolean getBoolean(String name)
     {
         return Dispatch.get(dispatch, name).getBoolean();
+    }
+
+    final <T extends Enum<T> & Constant> T getConstant(String name, Class<T> type)
+    {
+        int value = getInt(name);
+        return EnumUtils.findByValue(type, value);
     }
 }

@@ -26,7 +26,8 @@ public class OutlookFolderTest
 
         OutlookMail mail = outlook.createMail();
         mail.setTo("maokejackson@gmail.com");
-        mail.attachFile("D:\\tmp\\licenses.xml");
+        mail.setSubject("Test Mail");
+        mail.setBody("This is a test mail");
         mail.save();
     }
 
