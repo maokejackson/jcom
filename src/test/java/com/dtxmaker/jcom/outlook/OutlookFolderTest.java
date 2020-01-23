@@ -1,6 +1,6 @@
 package com.dtxmaker.jcom.outlook;
 
-import com.dtxmaker.jcom.outlook.constant.OutlookDefaultFolder;
+import com.dtxmaker.jcom.outlook.constant.OutlookDefaultFolderType;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -20,7 +20,7 @@ public class OutlookFolderTest
     {
         outlook = new OutlookApplication();
 
-        OutlookFolder inbox = outlook.getFolder(OutlookDefaultFolder.INBOX);
+        OutlookDefaultFolder inbox = outlook.getDefaultFolder(OutlookDefaultFolderType.INBOX);
         inbox.addFolder("Foo");
         inbox.addFolder("Bar");
 
@@ -33,15 +33,15 @@ public class OutlookFolderTest
     @After
     public void tearDown() throws Exception
     {
-        outlook.getFolder(OutlookDefaultFolder.INBOX).removeAllFolders();
-        outlook.getFolder(OutlookDefaultFolder.DRAFTS).removeAllItems();
-        outlook.getFolder(OutlookDefaultFolder.DELETED_ITEMS).removeAllItems();
+        outlook.getDefaultFolder(OutlookDefaultFolderType.INBOX).removeAllFolders();
+        outlook.getDefaultFolder(OutlookDefaultFolderType.DRAFTS).removeAllItems();
+        outlook.getDefaultFolder(OutlookDefaultFolderType.DELETED_ITEMS).removeAllItems();
     }
 
     @Test
     public void testGetFolder() throws Exception
     {
-        OutlookFolder inbox = outlook.getFolder(OutlookDefaultFolder.INBOX);
+        OutlookDefaultFolder inbox = outlook.getDefaultFolder(OutlookDefaultFolderType.INBOX);
         OutlookFolder folder = inbox.getFolder("Foo");
 
         assertEquals("Foo", folder.getName());
@@ -50,7 +50,7 @@ public class OutlookFolderTest
     @Test
     public void testGetFolderAt() throws Exception
     {
-        OutlookFolder inbox = outlook.getFolder(OutlookDefaultFolder.INBOX);
+        OutlookDefaultFolder inbox = outlook.getDefaultFolder(OutlookDefaultFolderType.INBOX);
         OutlookFolder folder = inbox.getFolderAt(2);
 
         assertEquals("Bar", folder.getName());
@@ -60,7 +60,7 @@ public class OutlookFolderTest
     @Test
     public void testSetName() throws Exception
     {
-        OutlookFolder inbox = outlook.getFolder(OutlookDefaultFolder.INBOX);
+        OutlookDefaultFolder inbox = outlook.getDefaultFolder(OutlookDefaultFolderType.INBOX);
         OutlookFolder folder = inbox.getFolder("Foo");
         folder.setName("Foo1");
 
@@ -70,7 +70,7 @@ public class OutlookFolderTest
     @Test
     public void testGetFolderCount() throws Exception
     {
-        OutlookFolder folder = outlook.getFolder(OutlookDefaultFolder.INBOX);
+        OutlookDefaultFolder folder = outlook.getDefaultFolder(OutlookDefaultFolderType.INBOX);
 
         assertEquals(2, folder.getFolderCount());
     }
@@ -78,7 +78,7 @@ public class OutlookFolderTest
     @Test
     public void testGetItemCount() throws Exception
     {
-        OutlookFolder folder = outlook.getFolder(OutlookDefaultFolder.DRAFTS);
+        OutlookDefaultFolder folder = outlook.getDefaultFolder(OutlookDefaultFolderType.DRAFTS);
 
         assertEquals(1, folder.getItemCount());
     }
@@ -86,7 +86,7 @@ public class OutlookFolderTest
     @Test
     public void testGetItems() throws Exception
     {
-        OutlookFolder folder = outlook.getFolder(OutlookDefaultFolder.DRAFTS);
+        OutlookDefaultFolder folder = outlook.getDefaultFolder(OutlookDefaultFolderType.DRAFTS);
         List<OutlookMail> mails = folder.getItems(OutlookMail.class);
 
         assertNotNull(mails);

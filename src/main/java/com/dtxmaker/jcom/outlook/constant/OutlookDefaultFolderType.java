@@ -3,7 +3,7 @@ package com.dtxmaker.jcom.outlook.constant;
 import com.dtxmaker.jcom.Constant;
 import com.dtxmaker.jcom.util.EnumUtils;
 
-public enum OutlookDefaultFolder implements Constant
+public enum OutlookDefaultFolderType implements Constant
 {
     DELETED_ITEMS(3),
     OUTBOX(4),
@@ -25,7 +25,7 @@ public enum OutlookDefaultFolder implements Constant
 
     private final int value;
 
-    OutlookDefaultFolder(int value)
+    OutlookDefaultFolderType(int value)
     {
         this.value = value;
     }
@@ -36,8 +36,8 @@ public enum OutlookDefaultFolder implements Constant
         return value;
     }
 
-    public static OutlookDefaultFolder findByValue(int value)
+    public static OutlookDefaultFolderType findByValue(int value)
     {
-        return EnumUtils.findByValue(OutlookDefaultFolder.class, value);
+        return EnumUtils.findByValue(OutlookDefaultFolderType.class, value);
     }
 }

@@ -1,10 +1,8 @@
 package com.dtxmaker.jcom.outlook;
 
-import com.dtxmaker.jcom.outlook.constant.OutlookDefaultFolder;
+import com.dtxmaker.jcom.outlook.constant.OutlookDefaultFolderType;
 import com.dtxmaker.jcom.outlook.constant.OutlookObjectClass;
 import com.jacob.com.Dispatch;
-
-import static com.dtxmaker.jcom.outlook.constant.OutlookDefaultFolder.DELETED_ITEMS;
 
 public class OutlookItem extends Outlook
 {
@@ -63,13 +61,13 @@ public class OutlookItem extends Outlook
     }
 
     /**
-     * Move item to specific <code>folder</code>.
+     * Move item to designated <code>default folder</code>.
      *
-     * @param folder the destination folder
+     * @param defaultFolder the designated default folder
      */
-    public void moveTo(OutlookDefaultFolder folder)
+    public void moveTo(OutlookDefaultFolderType defaultFolder)
     {
-        moveTo(application.getFolder(folder));
+        moveTo(application.getDefaultFolder(defaultFolder));
     }
 
     /**
@@ -77,7 +75,7 @@ public class OutlookItem extends Outlook
      */
     public void delete()
     {
-        Dispatch.call(dispatch, "Move", application.getFolder(DELETED_ITEMS));
+        moveTo(OutlookDefaultFolderType.DELETED_ITEMS);
     }
 
     /**

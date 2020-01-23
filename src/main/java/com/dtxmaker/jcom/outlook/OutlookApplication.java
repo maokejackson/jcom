@@ -1,6 +1,6 @@
 package com.dtxmaker.jcom.outlook;
 
-import com.dtxmaker.jcom.outlook.constant.OutlookDefaultFolder;
+import com.dtxmaker.jcom.outlook.constant.OutlookDefaultFolderType;
 import com.dtxmaker.jcom.outlook.constant.OutlookItemType;
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.ComFailException;
@@ -46,10 +46,10 @@ public class OutlookApplication
         return Dispatch.call(dispatch, "CreateItem", itemType.getValue()).toDispatch();
     }
 
-    private Dispatch getDefaultFolder(OutlookDefaultFolder defaultFolder)
+    private Dispatch getDefaultFolder(int defaultFolder)
     {
-        return cache.computeIfAbsent("GetDefaultFolder" + defaultFolder.getValue(),
-                key -> Dispatch.call(namespace, "GetDefaultFolder", defaultFolder.getValue()).toDispatch());
+        return cache.computeIfAbsent("GetDefaultFolder" + defaultFolder,
+                key -> Dispatch.call(namespace, "GetDefaultFolder", defaultFolder).toDispatch());
     }
 
     public OutlookMail createMail()
@@ -62,8 +62,8 @@ public class OutlookApplication
         return new OutlookContact(this, createItem(CONTACT));
     }
 
-    public OutlookFolder getFolder(OutlookDefaultFolder defaultFolder)
+    public OutlookDefaultFolder getDefaultFolder(OutlookDefaultFolderType defaultFolder)
     {
-        return new OutlookFolder(this, getDefaultFolder(defaultFolder));
+        return new OutlookDefaultFolder(this, getDefaultFolder(defaultFolder.getValue()));
     }
 }
