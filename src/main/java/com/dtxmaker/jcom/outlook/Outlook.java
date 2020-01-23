@@ -30,8 +30,7 @@ abstract class Outlook
 
     public final OutlookObjectClass getObjectClass()
     {
-        int value = Dispatch.get(dispatch, "Class").getInt();
-        return OutlookObjectClass.findByValue(value);
+        return getConstant("Class", OutlookObjectClass.class);
     }
 
     final Dispatch getDispatch()
@@ -41,8 +40,7 @@ abstract class Outlook
 
     final void put(String name, String value)
     {
-        if (value == null) value = "";
-        Dispatch.put(dispatch, name, value);
+        Dispatch.put(dispatch, name, value == null ? "" : value);
     }
 
     final void put(String name, Constant value)
@@ -77,7 +75,6 @@ abstract class Outlook
 
     final <T extends Enum<T> & Constant> T getConstant(String name, Class<T> type)
     {
-        int value = getInt(name);
-        return EnumUtils.findByValue(type, value);
+        return EnumUtils.findByValue(type, getInt(name));
     }
 }
