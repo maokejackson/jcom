@@ -17,7 +17,7 @@ public class OutlookApplication extends Outlook
 {
     private static final String OUTLOOK_APPLICATION = "Outlook.Application";
 
-    private final Dispatch namespace;
+    private final OutlookNameSpace namespace;
 
     public static boolean isInstalled()
     {
@@ -35,7 +35,12 @@ public class OutlookApplication extends Outlook
     public OutlookApplication()
     {
         super(new ActiveXComponent(OUTLOOK_APPLICATION));
-        namespace = Dispatch.call(dispatch, "GetNamespace", "MAPI").toDispatch();
+        namespace = new OutlookNameSpace(this);
+    }
+
+    public OutlookNameSpace getNamespace()
+    {
+        return namespace;
     }
 
     public String getDefaultProfileName()
@@ -73,12 +78,6 @@ public class OutlookApplication extends Outlook
         return Dispatch.call(dispatch, "CreateItem", itemType.getValue()).toDispatch();
     }
 
-    private Dispatch getDefaultFolder(int defaultFolder)
-    {
-        return cache.computeIfAbsent("GetDefaultFolder" + defaultFolder,
-                key -> Dispatch.call(namespace, "GetDefaultFolder", defaultFolder).toDispatch());
-    }
-
     public OutlookMail createMail()
     {
         return new OutlookMail(this, createItem(MAIL));
@@ -91,6 +90,11 @@ public class OutlookApplication extends Outlook
 
     public OutlookDefaultFolder getDefaultFolder(OutlookDefaultFolderType defaultFolder)
     {
-        return new OutlookDefaultFolder(this, getDefaultFolder(defaultFolder.getValue()));
+        return namespace.getDefaultFolder(defaultFolder);
+    }
+
+    public void quit()
+    {
+        Dispatch.call(dispatch, "Quit");
     }
 }

@@ -36,6 +36,7 @@ public class OutlookApplicationTest
         outlook.getDefaultFolder(OutlookDefaultFolderType.DRAFTS).removeAllItems();
         outlook.getDefaultFolder(OutlookDefaultFolderType.CONTACTS).removeAllItems();
         outlook.getDefaultFolder(OutlookDefaultFolderType.DELETED_ITEMS).removeAllItems();
+        outlook.quit();
     }
 
     @Test

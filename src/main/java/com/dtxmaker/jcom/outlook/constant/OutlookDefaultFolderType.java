@@ -5,22 +5,26 @@ import com.dtxmaker.jcom.util.EnumUtils;
 
 public enum OutlookDefaultFolderType implements Constant
 {
-    DELETED_ITEMS(3),
-    OUTBOX(4),
-    SENT_MAIL(5),
-    INBOX(6),
+    ALL_PUBLIC_FOLDERS(18),
     CALENDAR(9),
     CONTACTS(10),
-    JOURNAL(11),
-    NOTES(12),
-    TASKS(13),
-    DRAFTS(16),
-    ALL_PUBLIC_FOLDERS(18),
     CONFLICTS(19),
-    SYNC_ISSUES(20),
-    LOCAL_FAILURES(21),
-    SERVER_FAILURES(22),
+    DELETED_ITEMS(3),
+    DRAFTS(16),
+    INBOX(6),
+    JOURNAL(11),
     JUNK(23),
+    LOCAL_FAILURES(21),
+    MANAGED_EMAIL(29),
+    NOTES(12),
+    OUTBOX(4),
+    SENT_MAIL(5),
+    SERVER_FAILURES(22),
+    SUGGESTED_CONTACTS(30),
+    SYNC_ISSUES(20),
+    TASKS(13),
+    TO_DO(28),
+    RSS_FEEDS(25),
     ;
 
     private final int value;
