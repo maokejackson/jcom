@@ -1,7 +1,6 @@
 package com.dtxmaker.jcom.outlook;
 
 import com.dtxmaker.jcom.library.LanguageSettings;
-import com.dtxmaker.jcom.outlook.constant.OutlookDefaultFolderType;
 import com.dtxmaker.jcom.outlook.constant.OutlookItemType;
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.ComFailException;
@@ -11,13 +10,14 @@ import static com.dtxmaker.jcom.outlook.constant.OutlookItemType.CONTACT;
 import static com.dtxmaker.jcom.outlook.constant.OutlookItemType.MAIL;
 
 /**
- * https://docs.microsoft.com/en-us/office/vba/api/overview/outlook
+ * Represents the entire Microsoft Outlook application.
+ *
+ * @see <a href="https://docs.microsoft.com/en-us/office/vba/api/outlook.application">
+ * https://docs.microsoft.com/en-us/office/vba/api/outlook.application</a>
  */
 public class OutlookApplication extends Outlook
 {
     private static final String OUTLOOK_APPLICATION = "Outlook.Application";
-
-    private final OutlookNameSpace namespace;
 
     public static boolean isInstalled()
     {
@@ -35,66 +35,150 @@ public class OutlookApplication extends Outlook
     public OutlookApplication()
     {
         super(new ActiveXComponent(OUTLOOK_APPLICATION));
-        namespace = new OutlookNameSpace(this);
     }
 
+    /* *****************************************************
+     *                                                     *
+     *                      Methods                        *
+     *                                                     *
+     *******************************************************/
+
+    /**
+     * Copies a file from a specified location into a Microsoft Outlook store.
+     *
+     * @param filePath       The path name of the object you want to copy.
+     * @param destFolderPath The location you want to copy the file to.
+     */
+    public void copyFile(String filePath, String destFolderPath)
+    {
+        call("CopyFile", filePath, destFolderPath);
+    }
+
+    /**
+     * Creates and returns a new Microsoft Outlook item.
+     *
+     * @param itemType The Outlook item type for the new item.
+     * @return An Object value that represents the new Outlook item.
+     */
+    private Dispatch createItem(OutlookItemType itemType)
+    {
+        return callDispatch("CreateItem", itemType.getValue());
+    }
+
+    /**
+     * Creates and returns a new Microsoft Mail item.
+     */
+    public OutlookMail createMail()
+    {
+        return new OutlookMail(createItem(MAIL));
+    }
+
+    /**
+     * Creates and returns a new Microsoft Contact item.
+     */
+    public OutlookContact createContact()
+    {
+        return new OutlookContact(createItem(CONTACT));
+    }
+
+    /**
+     * Returns a NameSpace object of the specified type.
+     *
+     * @return A NameSpace object that represents the specified namespace.
+     */
     public OutlookNameSpace getNamespace()
     {
-        return namespace;
+        return getSession();
     }
 
+    /**
+     * Returns a Boolean indicating if a search will be synchronous or asynchronous.
+     *
+     * @param lookInFolders The path name of the folders that the search will search through. You must enclose the folder path with single quotes.
+     * @return <code>true</cdde> if the search is synchronous; otherwise, <code>false</code>.
+     */
+    public boolean isSearchSynchronous(String lookInFolders)
+    {
+        return callBoolean("IsSearchSynchronous", lookInFolders);
+    }
+
+    /**
+     * Closes all currently open windows.
+     */
+    public void quit()
+    {
+        call("Quit");
+    }
+
+    /**
+     * Refreshes the cache by obtaining the current definition from the Windows registry for one or all of the form regions that are defined for the local machine and the current user.
+     *
+     * @param regionName The internal name of the form region whose definition you want to refresh in the cache. To refresh all form region definitions, specify an empty string.
+     */
+    public void refreshFormRegionDefinition(String regionName)
+    {
+        call("RefreshFormRegionDefinition", regionName);
+    }
+
+    /* *****************************************************
+     *                                                     *
+     *                      Properties                     *
+     *                                                     *
+     *******************************************************/
+
+    /**
+     * Returns a String representing the name of the default profile name.
+     */
     public String getDefaultProfileName()
     {
         return getString("DefaultProfileName");
     }
 
+    /**
+     * Returns a Boolean to indicate if an add-in or external caller is considered trusted by Outlook.
+     */
     public boolean isTrusted()
     {
         return getBoolean("IsTrusted");
     }
 
+    /**
+     * Returns a LanguageSettings object for the application that contains the language-specific attributes of Outlook.
+     */
     public LanguageSettings getLanguageSettings()
     {
-        return new LanguageSettings(Dispatch.call(dispatch, "LanguageSettings").toDispatch());
+        return new LanguageSettings(getDispatch("LanguageSettings"));
     }
 
+    /**
+     * Returns a String value that represents the display name for the object.
+     */
     public String getName()
     {
         return getString("Name");
     }
 
+    /**
+     * Returns a String specifying the Microsoft Outlook globally unique identifier (GUID).
+     */
     public String getProductCode()
     {
         return getString("ProductCode");
     }
 
+    /**
+     * Returns a TimeZones collection that represents the set of time zones supported by Outlook.
+     */
+    public OutlookTimeZones getTimeZones()
+    {
+        return new OutlookTimeZones(getDispatch("TimeZones"));
+    }
+
+    /**
+     * Returns or sets a String indicating the number of the version.
+     */
     public String getVersion()
     {
         return getString("Version");
-    }
-
-    private Dispatch createItem(OutlookItemType itemType)
-    {
-        return Dispatch.call(dispatch, "CreateItem", itemType.getValue()).toDispatch();
-    }
-
-    public OutlookMail createMail()
-    {
-        return new OutlookMail(this, createItem(MAIL));
-    }
-
-    public OutlookContact createContact()
-    {
-        return new OutlookContact(this, createItem(CONTACT));
-    }
-
-    public OutlookDefaultFolder getDefaultFolder(OutlookDefaultFolderType defaultFolder)
-    {
-        return namespace.getDefaultFolder(defaultFolder);
-    }
-
-    public void quit()
-    {
-        Dispatch.call(dispatch, "Quit");
     }
 }

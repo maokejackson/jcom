@@ -33,10 +33,8 @@ public class OutlookApplicationTest
     @AfterClass
     public static void tearDown() throws Exception
     {
-        outlook.getDefaultFolder(OutlookDefaultFolderType.DRAFTS).removeAllItems();
-        outlook.getDefaultFolder(OutlookDefaultFolderType.CONTACTS).removeAllItems();
-        outlook.getDefaultFolder(OutlookDefaultFolderType.DELETED_ITEMS).removeAllItems();
-        outlook.quit();
+        outlook.getNamespace().getDefaultFolder(OutlookDefaultFolderType.DRAFTS).getItems().removeAll();
+        outlook.getNamespace().getDefaultFolder(OutlookDefaultFolderType.CONTACTS).getItems().removeAll();
     }
 
     @Test
@@ -84,8 +82,8 @@ public class OutlookApplicationTest
     @Test
     public void testGetDrafts() throws Exception
     {
-        OutlookDefaultFolder folder = outlook.getDefaultFolder(OutlookDefaultFolderType.DRAFTS);
-        OutlookItem item = folder.getItemAt(1);
+        OutlookFolder folder = outlook.getNamespace().getDefaultFolder(OutlookDefaultFolderType.DRAFTS);
+        OutlookItem item = folder.getItems().getItem(1);
 
         assertEquals(OutlookObjectClass.MAIL, item.getObjectClass());
     }
@@ -93,8 +91,8 @@ public class OutlookApplicationTest
     @Test
     public void testGetContacts() throws Exception
     {
-        OutlookDefaultFolder folder = outlook.getDefaultFolder(OutlookDefaultFolderType.CONTACTS);
-        OutlookItem item = folder.getItemAt(1);
+        OutlookFolder folder = outlook.getNamespace().getDefaultFolder(OutlookDefaultFolderType.CONTACTS);
+        OutlookItem item = folder.getItems().getItem(1);
 
         assertEquals(OutlookObjectClass.CONTACT, item.getObjectClass());
     }

@@ -4,27 +4,17 @@ import com.dtxmaker.jcom.Constant;
 import com.dtxmaker.jcom.outlook.constant.OutlookObjectClass;
 import com.dtxmaker.jcom.util.EnumUtils;
 import com.jacob.com.Dispatch;
+import com.jacob.com.Variant;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 abstract class Outlook
 {
-    final OutlookApplication application;
-    final Dispatch           dispatch;
-
-    final Map<String, Dispatch> cache = new HashMap<>();
+    private final Dispatch dispatch;
 
     Outlook(Dispatch dispatch)
     {
-        this(null, dispatch);
-    }
-
-    Outlook(OutlookApplication application, Dispatch dispatch)
-    {
-        this.application = application;
         this.dispatch = Objects.requireNonNull(dispatch);
     }
 
@@ -33,9 +23,49 @@ abstract class Outlook
         return getConstant("Class", OutlookObjectClass.class);
     }
 
+    public final OutlookNameSpace getSession()
+    {
+        return new OutlookNameSpace(Dispatch.call(dispatch, "GetNamespace", "MAPI").getDispatch());
+    }
+
     final Dispatch getDispatch()
     {
         return dispatch;
+    }
+
+    final Variant call(String method, Object... args)
+    {
+        return Dispatch.call(dispatch, method, args);
+    }
+
+    final Dispatch callDispatch(String method, Object... args)
+    {
+        return call(method, args).getDispatch();
+    }
+
+    final String callString(String method, Object... args)
+    {
+        return call(method, args).getString();
+    }
+
+    final int callInt(String method, Object... args)
+    {
+        return call(method, args).getInt();
+    }
+
+    final long callLong(String method, Object... args)
+    {
+        return call(method, args).getLong();
+    }
+
+    final Date callDate(String method, Object... args)
+    {
+        return call(method, args).getJavaDate();
+    }
+
+    final boolean callBoolean(String method, Object... args)
+    {
+        return call(method, args).getBoolean();
     }
 
     final void put(String name, String value)
@@ -46,6 +76,11 @@ abstract class Outlook
     final void put(String name, Constant value)
     {
         Dispatch.put(dispatch, name, value.getValue());
+    }
+
+    final void put(String name, Outlook value)
+    {
+        put(name, value.getDispatch());
     }
 
     final void put(String name, Object value)
@@ -66,6 +101,11 @@ abstract class Outlook
     final int getInt(String name)
     {
         return Dispatch.get(dispatch, name).getInt();
+    }
+
+    final long getLong(String name)
+    {
+        return Dispatch.get(dispatch, name).getLong();
     }
 
     final Date getDate(String name)

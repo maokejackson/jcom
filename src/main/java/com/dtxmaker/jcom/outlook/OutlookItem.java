@@ -1,16 +1,45 @@
 package com.dtxmaker.jcom.outlook;
 
-import com.dtxmaker.jcom.outlook.constant.OutlookDefaultFolderType;
 import com.dtxmaker.jcom.outlook.constant.OutlookPermission;
 import com.dtxmaker.jcom.outlook.constant.OutlookPermissionService;
 import com.jacob.com.Dispatch;
 
 public class OutlookItem extends Outlook
 {
-    public OutlookItem(OutlookApplication application, Dispatch dispatch)
+    OutlookItem(Dispatch dispatch)
     {
-        super(application, dispatch);
+        super(dispatch);
     }
+
+    /* *****************************************************
+     *                                                     *
+     *                      Methods                        *
+     *                                                     *
+     *******************************************************/
+
+    /**
+     * Move item to specific <code>folder</code>.
+     *
+     * @param folder the destination folder
+     */
+    public void moveTo(OutlookFolder folder)
+    {
+        call("Move", folder.getDispatch());
+    }
+
+    /**
+     * Save item in its default folder.
+     */
+    public void save()
+    {
+        call("Save");
+    }
+
+    /* *****************************************************
+     *                                                     *
+     *                      Properties                     *
+     *                                                     *
+     *******************************************************/
 
     public void setCategories(String categories)
     {
@@ -23,59 +52,13 @@ public class OutlookItem extends Outlook
     }
 
     /**
-     * Attach a file to this item.
-     *
-     * @param filePath the absolute path of the file.
-     */
-    public void attachFile(String filePath)
-    {
-        getAttachments().add(filePath);
-    }
-
-    /**
      * Get attachments of this item.
      *
      * @return attachments of this item.
      */
     public OutlookAttachments getAttachments()
     {
-        return new OutlookAttachments(application, getDispatch("Attachments"));
-    }
-
-    /**
-     * Save item in its default folder.
-     */
-    public void save()
-    {
-        Dispatch.call(dispatch, "Save");
-    }
-
-    /**
-     * Move item to specific <code>folder</code>.
-     *
-     * @param folder the destination folder
-     */
-    public void moveTo(OutlookFolder folder)
-    {
-        Dispatch.call(dispatch, "Move", folder.getDispatch());
-    }
-
-    /**
-     * Move item to designated <code>default folder</code>.
-     *
-     * @param defaultFolder the designated default folder
-     */
-    public void moveTo(OutlookDefaultFolderType defaultFolder)
-    {
-        moveTo(application.getDefaultFolder(defaultFolder));
-    }
-
-    /**
-     * Move item to Deleted Items folder.
-     */
-    public void delete()
-    {
-        moveTo(OutlookDefaultFolderType.DELETED_ITEMS);
+        return new OutlookAttachments(getDispatch("Attachments"));
     }
 
     public int getOutlookInternalVersion()

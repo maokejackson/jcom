@@ -4,9 +4,9 @@ import com.jacob.com.Dispatch;
 
 public class OutlookDefaultFolder extends OutlookFolder
 {
-    public OutlookDefaultFolder(OutlookApplication application, Dispatch dispatch)
+    OutlookDefaultFolder(Dispatch dispatch)
     {
-        super(application, dispatch);
+        super(dispatch);
     }
 
     @Override

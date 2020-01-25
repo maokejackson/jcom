@@ -1,13 +1,18 @@
 package com.dtxmaker.jcom.outlook.constant;
 
 import com.dtxmaker.jcom.Constant;
+import com.dtxmaker.jcom.outlook.OutlookContact;
+import com.dtxmaker.jcom.outlook.OutlookItem;
+import com.dtxmaker.jcom.outlook.OutlookMail;
 import com.dtxmaker.jcom.util.EnumUtils;
+
+import java.util.Arrays;
 
 public enum OutlookItemType implements Constant
 {
-    MAIL(0),
+    MAIL(0, OutlookMail.class),
     APPOINTMENT(1),
-    CONTACT(2),
+    CONTACT(2, OutlookContact.class),
     TASK(3),
     JOURNAL(4),
     NOTE(5),
@@ -15,11 +20,18 @@ public enum OutlookItemType implements Constant
     DISTRIBUTION_LIST(7),
     ;
 
-    private final int value;
+    private final int                          value;
+    private final Class<? extends OutlookItem> type;
 
     OutlookItemType(int value)
     {
+        this(value, OutlookItem.class);
+    }
+
+    OutlookItemType(int value, Class<? extends OutlookItem> type)
+    {
         this.value = value;
+        this.type = type;
     }
 
     @Override
@@ -28,8 +40,30 @@ public enum OutlookItemType implements Constant
         return value;
     }
 
+    public Class<? extends OutlookItem> getType()
+    {
+        return type;
+    }
+
     public static OutlookItemType findByValue(int value)
     {
         return EnumUtils.findByValue(OutlookItemType.class, value);
+    }
+
+    public static OutlookItemType findByType(Class<? extends OutlookItem> type)
+    {
+        return Arrays.stream(values())
+                .filter(object -> object.getType() == type)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public static int findValueByType(Class<? extends OutlookItem> type)
+    {
+        return Arrays.stream(values())
+                .filter(object -> object.getType() == type)
+                .findFirst()
+                .orElse(MAIL)
+                .getValue();
     }
 }

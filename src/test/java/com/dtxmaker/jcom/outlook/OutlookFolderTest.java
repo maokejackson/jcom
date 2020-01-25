@@ -6,23 +6,21 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class OutlookFolderTest
 {
     private OutlookApplication outlook;
 
     @Before
-    public void setUp() throws Exception
+    public void setUp()
     {
         outlook = new OutlookApplication();
 
-        OutlookDefaultFolder inbox = outlook.getDefaultFolder(OutlookDefaultFolderType.INBOX);
-        inbox.addFolder("Foo");
-        inbox.addFolder("Bar");
+        OutlookFolder inbox = outlook.getNamespace().getDefaultFolder(OutlookDefaultFolderType.INBOX);
+        inbox.getFolders().add("Foo");
+        inbox.getFolders().add("Bar");
 
         OutlookMail mail = outlook.createMail();
         mail.setTo("maokejackson@gmail.com");
@@ -32,36 +30,37 @@ public class OutlookFolderTest
     }
 
     @After
-    public void tearDown() throws Exception
+    public void tearDown()
     {
-        outlook.getDefaultFolder(OutlookDefaultFolderType.INBOX).removeAllFolders();
-        outlook.getDefaultFolder(OutlookDefaultFolderType.DRAFTS).removeAllItems();
-        outlook.getDefaultFolder(OutlookDefaultFolderType.DELETED_ITEMS).removeAllItems();
+        outlook.getNamespace().getDefaultFolder(OutlookDefaultFolderType.INBOX).getFolders().removeAll();
+        outlook.getNamespace().getDefaultFolder(OutlookDefaultFolderType.DRAFTS).getItems().removeAll();
+        outlook.getNamespace().getDefaultFolder(OutlookDefaultFolderType.DELETED_ITEMS).getFolders().removeAll();
+        outlook.getNamespace().getDefaultFolder(OutlookDefaultFolderType.DELETED_ITEMS).getItems().removeAll();
     }
 
     @Test
-    public void testGetFolder() throws Exception
+    public void testGetFolder()
     {
-        OutlookDefaultFolder inbox = outlook.getDefaultFolder(OutlookDefaultFolderType.INBOX);
+        OutlookFolder inbox = outlook.getNamespace().getDefaultFolder(OutlookDefaultFolderType.INBOX);
         OutlookFolder folder = inbox.getFolder("Foo");
 
         assertEquals("Foo", folder.getName());
     }
 
     @Test
-    public void testGetFolderAt() throws Exception
+    public void testGetFolderAt()
     {
-        OutlookDefaultFolder inbox = outlook.getDefaultFolder(OutlookDefaultFolderType.INBOX);
-        OutlookFolder folder = inbox.getFolderAt(2);
+        OutlookFolder inbox = outlook.getNamespace().getDefaultFolder(OutlookDefaultFolderType.INBOX);
+        OutlookFolder folder = inbox.getFolders().getItem(2);
 
         assertEquals("Bar", folder.getName());
     }
 
     @Ignore
     @Test
-    public void testSetName() throws Exception
+    public void testSetName()
     {
-        OutlookDefaultFolder inbox = outlook.getDefaultFolder(OutlookDefaultFolderType.INBOX);
+        OutlookFolder inbox = outlook.getNamespace().getDefaultFolder(OutlookDefaultFolderType.INBOX);
         OutlookFolder folder = inbox.getFolder("Foo");
         folder.setName("Foo1");
 
@@ -69,28 +68,26 @@ public class OutlookFolderTest
     }
 
     @Test
-    public void testGetFolderCount() throws Exception
+    public void testGetFolderCount()
     {
-        OutlookDefaultFolder folder = outlook.getDefaultFolder(OutlookDefaultFolderType.INBOX);
+        OutlookFolder folder = outlook.getNamespace().getDefaultFolder(OutlookDefaultFolderType.INBOX);
 
-        assertEquals(2, folder.getFolderCount());
+        assertEquals(2, folder.getFolders().getCount());
     }
 
     @Test
-    public void testGetItemCount() throws Exception
+    public void testGetItemCount()
     {
-        OutlookDefaultFolder folder = outlook.getDefaultFolder(OutlookDefaultFolderType.DRAFTS);
+        OutlookFolder folder = outlook.getNamespace().getDefaultFolder(OutlookDefaultFolderType.DRAFTS);
 
-        assertEquals(1, folder.getItemCount());
+        assertEquals(1, folder.getItems().getCount());
     }
 
     @Test
-    public void testGetItems() throws Exception
+    public void testGetFirst()
     {
-        OutlookDefaultFolder folder = outlook.getDefaultFolder(OutlookDefaultFolderType.DRAFTS);
-        List<OutlookMail> mails = folder.getItems(OutlookMail.class);
+        OutlookFolder deletedItems = outlook.getNamespace().getDefaultFolder(OutlookDefaultFolderType.DELETED_ITEMS);
 
-        assertNotNull(mails);
-        assertEquals(1, mails.size());
+        assertNull(deletedItems.getFolders().getFirst());
     }
 }

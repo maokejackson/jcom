@@ -1,33 +1,157 @@
 package com.dtxmaker.jcom.outlook;
 
-import com.dtxmaker.jcom.Countable;
-import com.dtxmaker.jcom.outlook.constant.OutlookObjectClass;
+import com.dtxmaker.jcom.outlook.constant.OutlookItemType;
+import com.dtxmaker.jcom.outlook.constant.OutlookShowItemCount;
 import com.jacob.com.Dispatch;
-import lombok.SneakyThrows;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class OutlookFolder extends Outlook implements Countable<OutlookItem>
+/**
+ * Represents an Outlook folder.
+ *
+ * @see <a href="https://docs.microsoft.com/en-us/office/vba/api/outlook.folder">
+ * https://docs.microsoft.com/en-us/office/vba/api/outlook.folder</a>
+ */
+public class OutlookFolder extends Outlook
 {
-    public OutlookFolder(OutlookApplication application, Dispatch dispatch)
+    OutlookFolder(Dispatch dispatch)
     {
-        super(application, dispatch);
+        super(dispatch);
     }
 
-    private Dispatch getItemsDispatch()
+    /* *****************************************************
+     *                                                     *
+     *                      Methods                        *
+     *                                                     *
+     *******************************************************/
+
+    /**
+     * Adds a Microsoft Exchange public folder to the public folder's Favorites folder.
+     */
+    public void addToPublicFolderFavorites()
     {
-        return cache.computeIfAbsent("Items", this::getDispatch);
+        call("AddToPFFavorites");
     }
 
-    private Dispatch getFoldersDispatch()
+    /**
+     * Copies the current folder in its entirety to the destination folder.
+     *
+     * @param destinationFolder Folder object that represents the destination folder.
+     */
+    public void copyTo(OutlookFolder destinationFolder)
     {
-        return cache.computeIfAbsent("Folders", this::getDispatch);
+        call("CopyTo", destinationFolder.getDispatch());
     }
 
-    private int getCount(Dispatch objects)
+    /**
+     * Deletes an object from the collection.
+     */
+    public void delete()
     {
-        return Dispatch.get(objects, "Count").getInt();
+        call("Delete");
+    }
+
+    /**
+     * Displays a new Explorer object for the folder.
+     */
+    public void display()
+    {
+        call("Display");
+    }
+
+    /**
+     * Returns a Folder object of the requested name.
+     *
+     * @param name The name of folder to return.
+     * @return A Folder object that represents the folder of the requested name.
+     */
+    public OutlookFolder getFolder(String name)
+    {
+        return new OutlookFolder(callDispatch("Folders", name));
+    }
+
+    /**
+     * Moves a folder to the specified destination folder.
+     *
+     * @param destinationFolder The destination Folder for the Folder that is being moved.
+     */
+    public void moveTo(OutlookFolder destinationFolder)
+    {
+        call("MoveTo", destinationFolder.getDispatch());
+    }
+
+    /* *****************************************************
+     *                                                     *
+     *                      Properties                     *
+     *                                                     *
+     *******************************************************/
+
+    public void setAddressBookName(String addressBookName)
+    {
+        put("AddressBookName", addressBookName);
+    }
+
+    public String getAddressBookName()
+    {
+        return getString("AddressBookName");
+    }
+
+    public boolean isCustomViewsOnly()
+    {
+        return getBoolean("CustomViewsOnly");
+    }
+
+    public OutlookItemType getDefaultItemType()
+    {
+        return getConstant("DefaultItemType", OutlookItemType.class);
+    }
+
+    public String getDefaultMessageClass()
+    {
+        return getString("DefaultMessageClass");
+    }
+
+    public void setDescription(String description)
+    {
+        put("Description", description);
+    }
+
+    public String getDescription()
+    {
+        return getString("Description");
+    }
+
+    public String getEntryId()
+    {
+        return getString("EntryID");
+    }
+
+    public String getFolderPath()
+    {
+        return getString("FolderPath");
+    }
+
+    public OutlookFolders getFolders()
+    {
+        return new OutlookFolders(getDispatch("Folders"));
+    }
+
+    public void setInAppFolderSyncObject(boolean inAppFolderSyncObject)
+    {
+        put("InAppFolderSyncObject", inAppFolderSyncObject);
+    }
+
+    public boolean isInAppFolderSyncObject()
+    {
+        return getBoolean("InAppFolderSyncObject");
+    }
+
+    public boolean isSharePointFolder()
+    {
+        return getBoolean("IsSharePointFolder");
+    }
+
+    public OutlookItems getItems()
+    {
+        return new OutlookItems(getDispatch("Items"));
     }
 
     public String getName()
@@ -40,130 +164,53 @@ public class OutlookFolder extends Outlook implements Countable<OutlookItem>
         put("Name", name);
     }
 
-    public int getFolderCount()
+    public void setShowAsAddressBook(boolean showAsAddressBook)
     {
-        return getCount(getFoldersDispatch());
+        put("ShowAsOutlookAB", showAsAddressBook);
     }
 
-    /**
-     * Return all sub folders in this folder.
-     *
-     * @return sub folders in this folder.
-     */
-    public OutlookFolder[] getFolders()
+    public boolean isShowAsAddressBook()
     {
-        int count = getFolderCount();
-        OutlookFolder[] folders = new OutlookFolder[count];
-
-        for (int i = 0; i < count; i++)
-        {
-            folders[i] = getFolderAt(i + 1);
-        }
-
-        return folders;
+        return getBoolean("ShowAsOutlookAB");
     }
 
-    public OutlookFolder getFolderAt(int index)
+    public void setShowItemCount(OutlookShowItemCount showItemCount)
     {
-        Dispatch folder = Dispatch.call(getFoldersDispatch(), "Item", index).toDispatch();
-        return new OutlookFolder(application, folder);
+        put("ShowItemCount", showItemCount);
     }
 
-    public OutlookFolder getFolder(String name)
+    public OutlookShowItemCount getShowItemCount()
     {
-        Dispatch folder = Dispatch.call(dispatch, "Folders", name).toDispatch();
-        return new OutlookFolder(application, folder);
+        return getConstant("ShowItemCount", OutlookShowItemCount.class);
     }
 
-    public OutlookFolder addFolder(String name)
+    public String getStoreId()
     {
-        Dispatch folder = Dispatch.call(getFoldersDispatch(), "Add", name).toDispatch();
-        return new OutlookFolder(application, folder);
+        return getString("StoreID");
     }
 
-    public void removeAllFolders()
+    public int getUnReadItemCount()
     {
-        for (int index = getFolderCount(); index > 0; index--)
-        {
-            removeFolderAt(index);
-        }
+        return getInt("UnReadItemCount");
     }
 
-    public void removeFolderAt(int index)
+    public void setWebViewOn(boolean webViewOn)
     {
-        Dispatch.call(getFoldersDispatch(), "Remove", index);
+        put("WebViewOn", webViewOn);
     }
 
-    public void removeFolder(String name)
+    public boolean isWebViewOn()
     {
-        Dispatch.call(getFoldersDispatch(), "Remove", name);
+        return getBoolean("WebViewOn");
     }
 
-    @Override
-    public int getItemCount()
+    public void setWebViewUrl(String webViewUrl)
     {
-        return getCount(getItemsDispatch());
+        put("WebViewURL", webViewUrl);
     }
 
-    @Override
-    public OutlookItem[] getItems()
+    public String getWebViewUrl()
     {
-        int count = getItemCount();
-        OutlookItem[] items = new OutlookItem[count];
-
-        for (int i = 0; i < count; i++)
-        {
-            items[i] = getItemAt(i + 1);
-        }
-
-        return items;
-    }
-
-    public <T extends OutlookItem> List<T> getItems(Class<T> type)
-    {
-        int count = getItemCount();
-        List<T> items = new ArrayList<>(count);
-        OutlookObjectClass objectClass = OutlookObjectClass.findByType(type);
-
-        for (int index = 1; index <= count; index++)
-        {
-            T item = getItemAt(index, type);
-
-            if (objectClass == null || item.getObjectClass() == objectClass)
-            {
-                items.add(item);
-            }
-        }
-
-        return items;
-    }
-
-    @Override
-    public OutlookItem getItemAt(int index)
-    {
-        Dispatch item = Dispatch.call(getItemsDispatch(), "Item", index).toDispatch();
-        return new OutlookItem(application, item);
-    }
-
-    @SneakyThrows
-    public <T extends OutlookItem> T getItemAt(int index, Class<T> type)
-    {
-        Dispatch item = Dispatch.call(getItemsDispatch(), "Item", index).toDispatch();
-        return type.getConstructor(OutlookApplication.class, Dispatch.class).newInstance(application, item);
-    }
-
-    @Override
-    public void removeAllItems()
-    {
-        for (int index = getItemCount(); index > 0; index--)
-        {
-            removeItemAt(index);
-        }
-    }
-
-    @Override
-    public void removeItemAt(int index)
-    {
-        Dispatch.call(getItemsDispatch(), "Remove", index);
+        return getString("WebViewURL");
     }
 }

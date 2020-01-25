@@ -4,12 +4,30 @@ import com.jacob.com.Dispatch;
 
 import java.util.Date;
 
+/**
+ * Represents a contact in a Contacts folder.
+ *
+ * @see <a href="https://docs.microsoft.com/en-us/office/vba/api/outlook.contactitem">
+ * https://docs.microsoft.com/en-us/office/vba/api/outlook.contactitem</a>
+ */
 public class OutlookContact extends OutlookItem
 {
-    public OutlookContact(OutlookApplication application, Dispatch dispatch)
+    OutlookContact(Dispatch dispatch)
     {
-        super(application, dispatch);
+        super(dispatch);
     }
+
+    /* *****************************************************
+     *                                                     *
+     *                      Methods                        *
+     *                                                     *
+     *******************************************************/
+
+    /* *****************************************************
+     *                                                     *
+     *                      Properties                     *
+     *                                                     *
+     *******************************************************/
 
     public String getFirstName()
     {

@@ -5,12 +5,54 @@ import com.jacob.com.Dispatch;
 
 import java.util.Date;
 
+/**
+ * Represents a mail message.
+ *
+ * @see <a href="https://docs.microsoft.com/en-us/office/vba/api/outlook.mailitem">
+ * https://docs.microsoft.com/en-us/office/vba/api/outlook.mailitem</a>
+ */
 public class OutlookMail extends OutlookItem
 {
-    public OutlookMail(OutlookApplication application, Dispatch dispatch)
+    OutlookMail(Dispatch dispatch)
     {
-        super(application, dispatch);
+        super(dispatch);
     }
+
+    /* *****************************************************
+     *                                                     *
+     *                      Methods                        *
+     *                                                     *
+     *******************************************************/
+
+    /**
+     * Clears the index of the conversation thread for the mail message.
+     */
+    public void clearConversationIndex()
+    {
+        call("ClearConversationIndex");
+    }
+
+    /**
+     * Clears the MailItem object as a task.
+     */
+    public void clearTaskFlag()
+    {
+        call("ClearTaskFlag");
+    }
+
+    /**
+     * Sends the email message.
+     */
+    public void send()
+    {
+        call("Send");
+    }
+
+    /* *****************************************************
+     *                                                     *
+     *                      Properties                     *
+     *                                                     *
+     *******************************************************/
 
     public void setSubject(String subject)
     {
@@ -419,7 +461,7 @@ public class OutlookMail extends OutlookItem
 
     public OutlookFolder getSaveSentMessageFolder()
     {
-        return new OutlookFolder(application, getDispatch("SaveSentMessageFolder"));
+        return new OutlookFolder(getDispatch("SaveSentMessageFolder"));
     }
 
     public void setSensitivity(OutlookSensitivity sensitivity)
@@ -540,13 +582,5 @@ public class OutlookMail extends OutlookItem
     public String getVotingResponse()
     {
         return getString("VotingResponse");
-    }
-
-    /**
-     * Send mail automatically.
-     */
-    public void send()
-    {
-        Dispatch.call(dispatch, "Send");
     }
 }

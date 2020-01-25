@@ -8,7 +8,10 @@ public class LanguageSettings
 {
     private final Dispatch dispatch;
 
-    public LanguageSettings(Dispatch dispatch) {this.dispatch = dispatch;}
+    public LanguageSettings(Dispatch dispatch)
+    {
+        this.dispatch = dispatch;
+    }
 
     public int getCreator()
     {
