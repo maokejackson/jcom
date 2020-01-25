@@ -456,7 +456,7 @@ public class OutlookMail extends OutlookItem
 
     public void setSaveSentMessageFolder(OutlookFolder folder)
     {
-        put("SaveSentMessageFolder", folder.getDispatch());
+        put("SaveSentMessageFolder", folder);
     }
 
     public OutlookFolder getSaveSentMessageFolder()

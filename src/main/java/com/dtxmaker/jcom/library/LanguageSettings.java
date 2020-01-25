@@ -1,30 +1,55 @@
 package com.dtxmaker.jcom.library;
 
-import com.dtxmaker.jcom.library.constant.AppLanguageID;
-import com.dtxmaker.jcom.library.constant.LanguageID;
+import com.dtxmaker.jcom.Base;
+import com.dtxmaker.jcom.library.constant.AppLanguageId;
+import com.dtxmaker.jcom.library.constant.LanguageId;
 import com.jacob.com.Dispatch;
 
-public class LanguageSettings
+/**
+ * Returns information about the language settings in a Microsoft Office application.
+ *
+ * @see <a href="https://docs.microsoft.com/en-us/office/vba/api/office.languagesettings">
+ * https://docs.microsoft.com/en-us/office/vba/api/office.languagesettings</a>
+ */
+public class LanguageSettings extends Base
 {
-    private final Dispatch dispatch;
-
     public LanguageSettings(Dispatch dispatch)
     {
-        this.dispatch = dispatch;
+        super(dispatch);
     }
 
+    /* *****************************************************
+     *                                                     *
+     *                      Properties                     *
+     *                                                     *
+     *******************************************************/
+
+    /**
+     * Returns an integer that indicates the application in which the LanguageSettings object was created.
+     */
     public int getCreator()
     {
-        return Dispatch.get(dispatch, "Creator").getInt();
+        return getInt("Creator");
     }
 
-    public int getLanguageID(AppLanguageID id)
+    /**
+     * Returns an enumeration representing the locale identifier (LCID) for the install language, the user interface language, or the Help language.
+     *
+     * @param id One of the {@link AppLanguageId} enumerations.
+     */
+    public int getLanguageID(AppLanguageId id)
     {
-        return Dispatch.call(dispatch, "LanguageID", id.getValue()).getInt();
+        return callInt("LanguageID", id);
     }
 
-    public boolean isLanguagePreferredForEditing(LanguageID languageID)
+    /**
+     * Returns <code>true</code> if the value for the LanguageID constant has been identified in the Windows registry as a preferred language for editing.
+     *
+     * @param languageId One of the {@link LanguageId} enumerations.
+     * @return <code>true</code> if the value for the LanguageID constant has been identified in the Windows registry as a preferred language for editing.
+     */
+    public boolean isLanguagePreferredForEditing(LanguageId languageId)
     {
-        return Dispatch.call(dispatch, "LanguagePreferredForEditing", languageID.getValue()).getBoolean();
+        return callBoolean("LanguagePreferredForEditing", languageId);
     }
 }

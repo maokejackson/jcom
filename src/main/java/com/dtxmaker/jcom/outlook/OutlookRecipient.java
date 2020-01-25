@@ -82,7 +82,7 @@ public class OutlookRecipient extends Outlook
 
     public void setAddressEntry(OutlookAddressEntry addressEntry)
     {
-        put("AddressEntry", addressEntry.getDispatch());
+        put("AddressEntry", addressEntry);
     }
 
     public OutlookAddressEntry getAddressEntry()

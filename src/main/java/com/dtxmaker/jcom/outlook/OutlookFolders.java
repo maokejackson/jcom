@@ -49,7 +49,7 @@ public class OutlookFolders extends Outlook
      */
     public OutlookFolder add(String name, OutlookDefaultFolderType type)
     {
-        return new OutlookFolder(callDispatch("Add", name, type.getValue()));
+        return new OutlookFolder(callDispatch("Add", name, type));
     }
 
     /**

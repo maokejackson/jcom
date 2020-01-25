@@ -62,7 +62,7 @@ public class OutlookApplication extends Outlook
      */
     private Dispatch createItem(OutlookItemType itemType)
     {
-        return callDispatch("CreateItem", itemType.getValue());
+        return callDispatch("CreateItem", itemType);
     }
 
     /**

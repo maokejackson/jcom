@@ -3,7 +3,7 @@ package com.dtxmaker.jcom.library.constant;
 import com.dtxmaker.jcom.Constant;
 import com.dtxmaker.jcom.util.EnumUtils;
 
-public enum AppLanguageID implements Constant
+public enum AppLanguageId implements Constant
 {
     APP_LANGUAGE_ID(4),
     HELP(3),
@@ -14,7 +14,7 @@ public enum AppLanguageID implements Constant
 
     private final int value;
 
-    AppLanguageID(int value)
+    AppLanguageId(int value)
     {
         this.value = value;
     }
@@ -25,8 +25,8 @@ public enum AppLanguageID implements Constant
         return value;
     }
 
-    public static AppLanguageID findByValue(int value)
+    public static AppLanguageId findByValue(int value)
     {
-        return EnumUtils.findByValue(AppLanguageID.class, value);
+        return EnumUtils.findByValue(AppLanguageId.class, value);
     }
 }

@@ -33,7 +33,7 @@ public class OutlookTimeZones extends Outlook
      */
     public Date convertTime(Date sourceDateTime, OutlookTimeZone sourceTimeZone, OutlookTimeZone destinationTimeZone)
     {
-        return callDate("ConvertTime", sourceDateTime, sourceTimeZone.getDispatch(), destinationTimeZone.getDispatch());
+        return callDate("ConvertTime", sourceDateTime, sourceTimeZone, destinationTimeZone);
     }
 
     /**

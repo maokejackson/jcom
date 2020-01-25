@@ -24,7 +24,7 @@ public class OutlookItem extends Outlook
      */
     public void moveTo(OutlookFolder folder)
     {
-        call("Move", folder.getDispatch());
+        call("Move", folder);
     }
 
     /**

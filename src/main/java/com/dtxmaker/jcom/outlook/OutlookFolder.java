@@ -38,7 +38,7 @@ public class OutlookFolder extends Outlook
      */
     public void copyTo(OutlookFolder destinationFolder)
     {
-        call("CopyTo", destinationFolder.getDispatch());
+        call("CopyTo", destinationFolder);
     }
 
     /**
@@ -75,7 +75,7 @@ public class OutlookFolder extends Outlook
      */
     public void moveTo(OutlookFolder destinationFolder)
     {
-        call("MoveTo", destinationFolder.getDispatch());
+        call("MoveTo", destinationFolder);
     }
 
     /* *****************************************************

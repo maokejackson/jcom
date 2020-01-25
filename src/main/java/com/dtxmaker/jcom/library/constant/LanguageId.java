@@ -3,7 +3,7 @@ package com.dtxmaker.jcom.library.constant;
 import com.dtxmaker.jcom.Constant;
 import com.dtxmaker.jcom.util.EnumUtils;
 
-public enum LanguageID implements Constant
+public enum LanguageId implements Constant
 {
     AFRIKAANS(1078),
     ALBANIAN(1052),
@@ -225,7 +225,7 @@ public enum LanguageID implements Constant
 
     private final int value;
 
-    LanguageID(int value)
+    LanguageId(int value)
     {
         this.value = value;
     }
@@ -236,8 +236,8 @@ public enum LanguageID implements Constant
         return value;
     }
 
-    public static LanguageID findByValue(int value)
+    public static LanguageId findByValue(int value)
     {
-        return EnumUtils.findByValue(LanguageID.class, value);
+        return EnumUtils.findByValue(LanguageId.class, value);
     }
 }

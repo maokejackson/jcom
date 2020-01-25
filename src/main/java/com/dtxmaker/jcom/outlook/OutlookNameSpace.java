@@ -88,7 +88,7 @@ public class OutlookNameSpace extends Outlook
      */
     public OutlookDefaultFolder getDefaultFolder(OutlookDefaultFolderType folderType)
     {
-        return new OutlookDefaultFolder(callDispatch("GetDefaultFolder", folderType.getValue()));
+        return new OutlookDefaultFolder(callDispatch("GetDefaultFolder", folderType));
     }
 
     /**
@@ -164,8 +164,7 @@ public class OutlookNameSpace extends Outlook
      */
     public OutlookDefaultFolder getSharedDefaultFolder(OutlookRecipient recipient, OutlookDefaultFolderType folderType)
     {
-        return new OutlookDefaultFolder(
-                callDispatch("GetSharedDefaultFolder", recipient.getDispatch(), folderType.getValue()));
+        return new OutlookDefaultFolder(callDispatch("GetSharedDefaultFolder", recipient, folderType));
     }
 
     /**
