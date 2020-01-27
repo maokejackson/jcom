@@ -37,7 +37,7 @@ public class LanguageSettings extends Base
      *
      * @param id One of the {@link AppLanguageId} enumerations.
      */
-    public int getLanguageID(AppLanguageId id)
+    public int getLanguageId(AppLanguageId id)
     {
         return callInt("LanguageID", id);
     }

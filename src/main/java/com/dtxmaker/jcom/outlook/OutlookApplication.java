@@ -6,8 +6,7 @@ import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.ComFailException;
 import com.jacob.com.Dispatch;
 
-import static com.dtxmaker.jcom.outlook.constant.OutlookItemType.CONTACT;
-import static com.dtxmaker.jcom.outlook.constant.OutlookItemType.MAIL;
+import static com.dtxmaker.jcom.outlook.constant.OutlookItemType.*;
 
 /**
  * Represents the entire Microsoft Outlook application.
@@ -79,6 +78,22 @@ public class OutlookApplication extends Outlook
     public OutlookContact createContact()
     {
         return new OutlookContact(createItem(CONTACT));
+    }
+
+    /**
+     * Creates and returns a new Microsoft Appointment item.
+     */
+    public OutlookAppointment createAppointment()
+    {
+        return new OutlookAppointment(createItem(APPOINTMENT));
+    }
+
+    /**
+     * Creates and returns a new Microsoft Task item.
+     */
+    public OutlookTask createTask()
+    {
+        return new OutlookTask(createItem(TASK));
     }
 
     /**

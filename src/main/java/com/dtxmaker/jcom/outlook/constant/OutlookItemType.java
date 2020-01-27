@@ -1,9 +1,7 @@
 package com.dtxmaker.jcom.outlook.constant;
 
 import com.dtxmaker.jcom.Constant;
-import com.dtxmaker.jcom.outlook.OutlookContact;
-import com.dtxmaker.jcom.outlook.OutlookItem;
-import com.dtxmaker.jcom.outlook.OutlookMail;
+import com.dtxmaker.jcom.outlook.*;
 import com.dtxmaker.jcom.util.EnumUtils;
 
 import java.util.Arrays;
@@ -11,9 +9,9 @@ import java.util.Arrays;
 public enum OutlookItemType implements Constant
 {
     MAIL(0, OutlookMail.class),
-    APPOINTMENT(1),
+    APPOINTMENT(1, OutlookAppointment.class),
     CONTACT(2, OutlookContact.class),
-    TASK(3),
+    TASK(3, OutlookTask.class),
     JOURNAL(4),
     NOTE(5),
     POST(6),

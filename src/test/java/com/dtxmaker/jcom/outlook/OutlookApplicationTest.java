@@ -26,7 +26,7 @@ public class OutlookApplicationTest
         OutlookContact contact = outlook.createContact();
         contact.setFirstName("Maoke");
         contact.setLastName("Jackson");
-        contact.setEmailAddress("maokejackson@gmail.com");
+        contact.setEmail1Address("maokejackson@gmail.com");
         contact.save();
     }
 

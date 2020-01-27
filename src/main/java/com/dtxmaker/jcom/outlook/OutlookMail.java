@@ -41,6 +41,46 @@ public class OutlookMail extends OutlookItem
     }
 
     /**
+     * Executes the Forward action for an item and returns the resulting copy as a MailItem object.
+     *
+     * @return A MailItem object that represents the new mail item.
+     */
+    public OutlookMail forward()
+    {
+        return new OutlookMail(callDispatch("Forward"));
+    }
+
+    /**
+     * Marks it as a task and assigns a task interval for the object.
+     *
+     * @param markInterval the task interval
+     */
+    public void markAsTask(OutlookMarkInterval markInterval)
+    {
+        call("MarkAsTask", markInterval);
+    }
+
+    /**
+     * Creates a reply, pre-addressed to the original sender, from the original message.
+     *
+     * @return A MailItem object that represents the reply.
+     */
+    public OutlookMail reply()
+    {
+        return new OutlookMail(callDispatch("Reply"));
+    }
+
+    /**
+     * Creates a reply to all original recipients from the original message.
+     *
+     * @return A MailItem object that represents the reply.
+     */
+    public OutlookMail replyAll()
+    {
+        return new OutlookMail(callDispatch("ReplyAll"));
+    }
+
+    /**
      * Sends the email message.
      */
     public void send()
@@ -54,104 +94,14 @@ public class OutlookMail extends OutlookItem
      *                                                     *
      *******************************************************/
 
-    public void setSubject(String subject)
+    public void setAlternateRecipientAllowed(boolean alternateRecipientAllowed)
     {
-        put("Subject", subject);
+        put("AlternateRecipientAllowed", alternateRecipientAllowed);
     }
 
-    public String getSubject()
+    public boolean isAlternateRecipientAllowed()
     {
-        return getString("Subject");
-    }
-
-    public String getSenderName()
-    {
-        return getString("SenderName");
-    }
-
-    public void setSenderEmailAddress(String senderEmailAddress)
-    {
-        put("SenderEmailAddress", senderEmailAddress);
-    }
-
-    public String getSenderEmailAddress()
-    {
-        return getString("SenderEmailAddress");
-    }
-
-    public String getSenderEmailType()
-    {
-        return getString("SenderEmailType");
-    }
-
-    public void setTo(String to)
-    {
-        put("To", to);
-    }
-
-    public String getTo()
-    {
-        return getString("To");
-    }
-
-    public void setCc(String cc)
-    {
-        put("CC", cc);
-    }
-
-    public String getCc()
-    {
-        return getString("CC");
-    }
-
-    public void setBcc(String bcc)
-    {
-        put("BCC", bcc);
-    }
-
-    public String getBcc()
-    {
-        return getString("BCC");
-    }
-
-    public void setBody(String body)
-    {
-        put("Body", body);
-    }
-
-    public String getBody()
-    {
-        return getString("Body");
-    }
-
-    public void setHtmlBody(String htmlBody)
-    {
-        put("HTMLBody", htmlBody);
-    }
-
-    public String getHtmlBody()
-    {
-        return getString("HTMLBody");
-    }
-
-    public void setBodyFormat(OutlookBodyFormat bodyFormat)
-    {
-        put("BodyFormat", bodyFormat);
-    }
-
-    public OutlookBodyFormat getBodyFormat()
-    {
-        return getConstant("BodyFormat", OutlookBodyFormat.class);
-    }
-
-    public void setImportance(OutlookImportance importance)
-    {
-        put("Importance", importance);
-    }
-
-    public OutlookImportance getImportance()
-    {
-        return getConstant("Importance", OutlookImportance.class);
+        return getBoolean("AlternateRecipientAllowed");
     }
 
     public void setAutoForwarded(boolean autoForwarded)
@@ -164,9 +114,14 @@ public class OutlookMail extends OutlookItem
         return getBoolean("AutoForwarded");
     }
 
-    public boolean isAutoResolvedWinner()
+    public void setBcc(String bcc)
     {
-        return getBoolean("AutoResolvedWinner");
+        put("BCC", bcc);
+    }
+
+    public String getBcc()
+    {
+        return getString("BCC");
     }
 
     public void setBillingInformation(String billingInformation)
@@ -179,6 +134,26 @@ public class OutlookMail extends OutlookItem
         return getString("BillingInformation");
     }
 
+    public void setBodyFormat(OutlookBodyFormat bodyFormat)
+    {
+        put("BodyFormat", bodyFormat);
+    }
+
+    public OutlookBodyFormat getBodyFormat()
+    {
+        return getConstant("BodyFormat", OutlookBodyFormat.class);
+    }
+
+    public void setCc(String cc)
+    {
+        put("CC", cc);
+    }
+
+    public String getCc()
+    {
+        return getString("CC");
+    }
+
     public void setCompanies(String companies)
     {
         put("Companies", companies);
@@ -187,26 +162,6 @@ public class OutlookMail extends OutlookItem
     public String getCompanies()
     {
         return getString("Companies");
-    }
-
-    public String getConversationID()
-    {
-        return getString("ConversationID");
-    }
-
-    public String getConversationIndex()
-    {
-        return getString("ConversationIndex");
-    }
-
-    public String getConversationTopic()
-    {
-        return getString("ConversationTopic");
-    }
-
-    public Date getCreationTime()
-    {
-        return getDate("CreationTime");
     }
 
     public void setDeferredDeliveryTime(Date deferredDeliveryTime)
@@ -234,11 +189,6 @@ public class OutlookMail extends OutlookItem
         return getConstant("DownloadState", OutlookDownloadState.class);
     }
 
-    public String getEntryID()
-    {
-        return getString("EntryID");
-    }
-
     public void setExpiryTime(Date expiryTime)
     {
         put("ExpiryTime", expiryTime);
@@ -259,69 +209,29 @@ public class OutlookMail extends OutlookItem
         return getString("FlagRequest");
     }
 
-    public void setInternetCodePage(int internetCodePage)
+    public void setHtmlBody(String htmlBody)
+    {
+        put("HTMLBody", htmlBody);
+    }
+
+    public String getHtmlBody()
+    {
+        return getString("HTMLBody");
+    }
+
+    public void setInternetCodePage(long internetCodePage)
     {
         put("InternetCodepage", internetCodePage);
     }
 
-    public int getInternetCodePage()
+    public long getInternetCodePage()
     {
-        return getInt("InternetCodepage");
-    }
-
-    public boolean isConflict()
-    {
-        return getBoolean("IsConflict");
+        return getLong("InternetCodepage");
     }
 
     public boolean isMarkedAsTask()
     {
         return getBoolean("IsMarkedAsTask");
-    }
-
-    public Date getLastModificationTime()
-    {
-        return getDate("LastModificationTime");
-    }
-
-    public void setMarkForDownload(OutlookRemoteStatus remoteStatus)
-    {
-        put("MarkForDownload", remoteStatus);
-    }
-
-    public OutlookRemoteStatus getMarkForDownload()
-    {
-        return getConstant("MarkForDownload", OutlookRemoteStatus.class);
-    }
-
-    public void setMessageClass(String messageClass)
-    {
-        put("MessageClass", messageClass);
-    }
-
-    public String getMessageClass()
-    {
-        return getString("MessageClass");
-    }
-
-    public void setMileage(String mileage)
-    {
-        put("Mileage", mileage);
-    }
-
-    public String getMileage()
-    {
-        return getString("Mileage");
-    }
-
-    public void setNoAging(boolean noAging)
-    {
-        put("NoAging", noAging);
-    }
-
-    public boolean isNoAging()
-    {
-        return getBoolean("NoAging");
     }
 
     public void setOriginatorDeliveryReportRequested(boolean originatorDeliveryReportRequested)
@@ -334,12 +244,42 @@ public class OutlookMail extends OutlookItem
         return getBoolean("OriginatorDeliveryReportRequested");
     }
 
+    public void setPermission(OutlookPermission permission)
+    {
+        put("Permission", permission);
+    }
+
+    public OutlookPermission getPermission()
+    {
+        return getConstant("Permission", OutlookPermission.class);
+    }
+
+    public void setPermissionService(OutlookPermissionService permissionService)
+    {
+        put("PermissionService", permissionService);
+    }
+
+    public OutlookPermissionService getPermissionService()
+    {
+        return getConstant("PermissionService", OutlookPermissionService.class);
+    }
+
+    public void setPermissionTemplateGuid(String permissionTemplateGuid)
+    {
+        put("PermissionTemplateGuid", permissionTemplateGuid);
+    }
+
+    public String getPermissionTemplateGuid()
+    {
+        return getString("PermissionTemplateGuid");
+    }
+
     public boolean isReadReceiptRequested()
     {
         return getBoolean("ReadReceiptRequested");
     }
 
-    public String getReceivedByEntryID()
+    public String getReceivedByEntryId()
     {
         return getString("ReceivedByEntryID");
     }
@@ -349,7 +289,7 @@ public class OutlookMail extends OutlookItem
         return getString("ReceivedByName");
     }
 
-    public String getReceivedOnBehalfOfEntryID()
+    public String getReceivedOnBehalfOfEntryId()
     {
         return getString("ReceivedOnBehalfOfEntryID");
     }
@@ -372,46 +312,6 @@ public class OutlookMail extends OutlookItem
     public boolean isRecipientReassignmentProhibited()
     {
         return getBoolean("RecipientReassignmentProhibited");
-    }
-
-    public void setReminderOverrideDefault(String reminderOverrideDefault)
-    {
-        put("ReminderOverrideDefault", reminderOverrideDefault);
-    }
-
-    public String getReminderOverrideDefault()
-    {
-        return getString("ReminderOverrideDefault");
-    }
-
-    public void setReminderPlaySound(boolean reminderPlaySound)
-    {
-        put("ReminderPlaySound", reminderPlaySound);
-    }
-
-    public boolean isReminderPlaySound()
-    {
-        return getBoolean("ReminderPlaySound");
-    }
-
-    public void setReminderSet(boolean reminderSet)
-    {
-        put("ReminderSet", reminderSet);
-    }
-
-    public boolean getReminderSet()
-    {
-        return getBoolean("ReminderSet");
-    }
-
-    public void setReminderSoundFile(String reminderSoundFile)
-    {
-        put("ReminderSoundFile", reminderSoundFile);
-    }
-
-    public String getReminderSoundFile()
-    {
-        return getString("ReminderSoundFile");
     }
 
     public void setReminderTime(Date reminderTime)
@@ -449,11 +349,6 @@ public class OutlookMail extends OutlookItem
         return getString("RetentionPolicyName");
     }
 
-    public boolean isSaved()
-    {
-        return getBoolean("Saved");
-    }
-
     public void setSaveSentMessageFolder(OutlookFolder folder)
     {
         put("SaveSentMessageFolder", folder);
@@ -464,14 +359,29 @@ public class OutlookMail extends OutlookItem
         return new OutlookFolder(getDispatch("SaveSentMessageFolder"));
     }
 
-    public void setSensitivity(OutlookSensitivity sensitivity)
+    public void setSender(OutlookAddressEntry sender)
     {
-        put("Sensitivity", sensitivity);
+        put("Sender", sender);
     }
 
-    public OutlookSensitivity getSensitivity()
+    public OutlookAddressEntry getSender()
     {
-        return getConstant("Sensitivity", OutlookSensitivity.class);
+        return new OutlookAddressEntry(getDispatch("Sender"));
+    }
+
+    public String getSenderEmailAddress()
+    {
+        return getString("SenderEmailAddress");
+    }
+
+    public String getSenderEmailType()
+    {
+        return getString("SenderEmailType");
+    }
+
+    public String getSenderName()
+    {
+        return getString("SenderName");
     }
 
     public boolean isSent()
@@ -492,11 +402,6 @@ public class OutlookMail extends OutlookItem
     public String getSentOnBehalfOfName()
     {
         return getString("SentOnBehalfOfName");
-    }
-
-    public int getSize()
-    {
-        return getInt("Size");
     }
 
     public boolean isSubmitted()
@@ -544,6 +449,16 @@ public class OutlookMail extends OutlookItem
         return getString("TaskSubject");
     }
 
+    public void setTo(String to)
+    {
+        put("To", to);
+    }
+
+    public String getTo()
+    {
+        return getString("To");
+    }
+
     public void setToDoTaskOrdinal(Date toDoTaskOrdinal)
     {
         put("ToDoTaskOrdinal", toDoTaskOrdinal);
@@ -552,16 +467,6 @@ public class OutlookMail extends OutlookItem
     public Date getToDoTaskOrdinal()
     {
         return getDate("ToDoTaskOrdinal");
-    }
-
-    public void setUnRead(boolean unRead)
-    {
-        put("UnRead", unRead);
-    }
-
-    public boolean isUnRead()
-    {
-        return getBoolean("UnRead");
     }
 
     public void setVotingOptions(String votingOptions)
