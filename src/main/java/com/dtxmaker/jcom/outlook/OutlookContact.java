@@ -45,7 +45,7 @@ public class OutlookContact extends AbstractOutlookInternalItem
     }
 
     /**
-     * Clears the ContactItem object as a task.
+     * Clears the item as a task.
      */
     public void clearTaskFlag()
     {
@@ -55,7 +55,7 @@ public class OutlookContact extends AbstractOutlookInternalItem
     /**
      * Creates a new MailItem object containing contact information and, optionally, an Electronic Business Card (EBC) image based on the specified ContactItem object.
      *
-     * @return A MailItem object that represents the new email item containing the business card information.
+     * @return the new email item containing the business card information.
      */
     public OutlookMail forwardAsBusinessCard()
     {
@@ -65,7 +65,7 @@ public class OutlookContact extends AbstractOutlookInternalItem
     /**
      * Creates a MailItem and attaches the contact information in vCard format.
      *
-     * @return A MailItem object that represents the new mail item to which the contact information is attached.
+     * @return the new mail item to which the contact information is attached.
      */
     public OutlookMail forwardAsVcard()
     {

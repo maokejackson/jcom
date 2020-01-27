@@ -33,7 +33,7 @@ public class OutlookMail extends AbstractOutlookInternalItem
     }
 
     /**
-     * Clears the MailItem object as a task.
+     * Clears the item as a task.
      */
     public void clearTaskFlag()
     {
@@ -41,9 +41,9 @@ public class OutlookMail extends AbstractOutlookInternalItem
     }
 
     /**
-     * Executes the Forward action for an item and returns the resulting copy as a MailItem object.
+     * Executes the Forward action for an item and returns the resulting copy.
      *
-     * @return A MailItem object that represents the new mail item.
+     * @return the new mail item.
      */
     public OutlookMail forward()
     {

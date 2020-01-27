@@ -23,6 +23,52 @@ public class OutlookJournal extends AbstractOutlookInternalItem
      *                                                     *
      *******************************************************/
 
+    /**
+     * Executes the Forward action for an item and returns the resulting copy.
+     *
+     * @return the new mail item.
+     */
+    public OutlookJournal forward()
+    {
+        return new OutlookJournal(callDispatch("Forward"));
+    }
+
+    /**
+     * Creates a reply, pre-addressed to the original sender, from the original message.
+     *
+     * @return A MailItem object that represents the reply.
+     */
+    public OutlookMail reply()
+    {
+        return new OutlookMail(callDispatch("Reply"));
+    }
+
+    /**
+     * Creates a reply to all original recipients from the original message.
+     *
+     * @return A MailItem object that represents the reply.
+     */
+    public OutlookMail replyAll()
+    {
+        return new OutlookMail(callDispatch("ReplyAll"));
+    }
+
+    /**
+     * Starts the timer on the journal entry.
+     */
+    public void startTimer()
+    {
+        call("StartTimer");
+    }
+
+    /**
+     * Stops the timer on the journal entry.
+     */
+    public void stopTimer()
+    {
+        call("StopTimer");
+    }
+
     /* *****************************************************
      *                                                     *
      *                      Properties                     *

@@ -1,6 +1,7 @@
 package com.dtxmaker.jcom.outlook;
 
 import com.dtxmaker.jcom.outlook.constant.OutlookBodyFormat;
+import com.dtxmaker.jcom.outlook.constant.OutlookMarkInterval;
 import com.jacob.com.Dispatch;
 
 import java.util.Date;
@@ -30,6 +31,52 @@ public class OutlookPost extends AbstractOutlookInternalItem
     public void clearConversationIndex()
     {
         call("ClearConversationIndex");
+    }
+
+    /**
+     * Clears the item as a task.
+     */
+    public void clearTaskFlag()
+    {
+        call("ClearTaskFlag");
+    }
+
+    /**
+     * Executes the Forward action for an item and returns the resulting copy.
+     *
+     * @return the new mail item.
+     */
+    public OutlookPost forward()
+    {
+        return new OutlookPost(callDispatch("Forward"));
+    }
+
+    /**
+     * Marks it as a task and assigns a task interval for the object.
+     *
+     * @param markInterval the task interval
+     */
+    public void markAsTask(OutlookMarkInterval markInterval)
+    {
+        call("MarkAsTask", markInterval);
+    }
+
+    /**
+     * Sends (posts) the PostItem object.
+     */
+    public void post()
+    {
+        call("Post");
+    }
+
+    /**
+     * Creates a reply, pre-addressed to the original sender, from the original message.
+     *
+     * @return A MailItem object that represents the reply.
+     */
+    public OutlookMail reply()
+    {
+        return new OutlookMail(callDispatch("Reply"));
     }
 
     /* *****************************************************

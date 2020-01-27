@@ -27,6 +27,90 @@ public class OutlookTask extends AbstractOutlookInternalItem
      *                                                     *
      *******************************************************/
 
+    /**
+     * Assigns a task and returns a TaskItem object that represents it.
+     *
+     * @return an assigned task.
+     */
+    public OutlookTask assign()
+    {
+        return new OutlookTask(callDispatch("Assign"));
+    }
+
+    /**
+     * Resets an unsent response to a task request back to a simple task.
+     */
+    public void cancelResponseState()
+    {
+        call("CancelResponseState");
+    }
+
+    /**
+     * Removes the recurrence settings and restores the single-occurrence state for an appointment or task.
+     */
+    public void clearRecurrencePattern()
+    {
+        call("ClearRecurrencePattern");
+    }
+
+    /**
+     * Marks the task as completed.
+     */
+    public void markComplete()
+    {
+        call("MarkComplete");
+    }
+
+    /**
+     * Responds to a task request.
+     *
+     * @param response the response to the request
+     * @return A TaskItem that represents the response to the task request.
+     */
+    public OutlookTask respond(OutlookTaskResponse response)
+    {
+        return new OutlookTask(callDispatch("Respond", response));
+    }
+
+    /**
+     * Responds to a task request.
+     *
+     * @param response             the response to the request
+     * @param noUI                 <code>true</code> to not display a dialog box; the response is sent automatically. <code>false</code> to display the dialog box for responding.
+     * @param additionalTextDialog <code>false</code> to not prompt the user for input; the response is displayed in the inspector for editing. <code>true</code> to prompt the user to either send or send with comments. This argument is valid only if <code>NoUI</code> is <code>false</code>.
+     * @return A TaskItem that represents the response to the task request.
+     */
+    public OutlookTask respond(OutlookTaskResponse response, boolean noUI, boolean additionalTextDialog)
+    {
+        return new OutlookTask(callDispatch("Respond", response, noUI, additionalTextDialog));
+    }
+
+    /**
+     * Sends the task.
+     */
+    public void send()
+    {
+        call("Send");
+    }
+
+    /**
+     * Clears the current instance of a recurring task and sets the recurrence to the next instance of that task.
+     *
+     * @return <code>false</code> indicates that the task was the last task in the recurrence, so there is no task to set the recurrence to. <code>true</code> indicates that the recurrence was successfully set to the next instance of that task.
+     */
+    public boolean skipRecurrence()
+    {
+        return callBoolean("SkipRecurrence");
+    }
+
+    /**
+     * Sends a status report to all Cc recipients (recipients returned by the StatusUpdateRecipients property) with the current status for the task and returns an Object representing the status report.
+     */
+    public void getStatusReport()
+    {
+        call("StatusReport");
+    }
+
     /* *****************************************************
      *                                                     *
      *                      Properties                     *

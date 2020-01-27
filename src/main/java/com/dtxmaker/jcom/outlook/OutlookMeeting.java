@@ -23,6 +23,55 @@ public class OutlookMeeting extends AbstractOutlookInternalItem
      *                                                     *
      *******************************************************/
 
+    /**
+     * Executes the Forward action for an item and returns the resulting copy.
+     *
+     * @return the new mail item.
+     */
+    public OutlookMeeting forward()
+    {
+        return new OutlookMeeting(callDispatch("Forward"));
+    }
+
+    /**
+     * Returns an AppointmentItem object that represents the appointment associated with the meeting request.
+     *
+     * @param addToCalendar <code>true</code> to add the meeting to the default Calendar folder.
+     * @return the associated appointment.
+     */
+    public OutlookAppointment getAssociatedAppointment(boolean addToCalendar)
+    {
+        return new OutlookAppointment(callDispatch("AddToCalendar", addToCalendar));
+    }
+
+    /**
+     * Creates a reply, pre-addressed to the original sender, from the original message.
+     *
+     * @return A MailItem object that represents the reply.
+     */
+    public OutlookMail reply()
+    {
+        return new OutlookMail(callDispatch("Reply"));
+    }
+
+    /**
+     * Creates a reply to all original recipients from the original message.
+     *
+     * @return A MailItem object that represents the reply.
+     */
+    public OutlookMail replyAll()
+    {
+        return new OutlookMail(callDispatch("ReplyAll"));
+    }
+
+    /**
+     * Sends the meeting item.
+     */
+    public void send()
+    {
+        call("Send");
+    }
+
     /* *****************************************************
      *                                                     *
      *                      Properties                     *

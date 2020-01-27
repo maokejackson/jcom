@@ -1,9 +1,6 @@
 package com.dtxmaker.jcom.outlook;
 
-import com.dtxmaker.jcom.outlook.constant.OutlookBusyStatus;
-import com.dtxmaker.jcom.outlook.constant.OutlookMeetingStatus;
-import com.dtxmaker.jcom.outlook.constant.OutlookRecurrenceState;
-import com.dtxmaker.jcom.outlook.constant.OutlookResponseStatus;
+import com.dtxmaker.jcom.outlook.constant.*;
 import com.jacob.com.Dispatch;
 
 import java.util.Date;
@@ -26,6 +23,78 @@ public class OutlookAppointment extends AbstractOutlookInternalItem
      *                      Methods                        *
      *                                                     *
      *******************************************************/
+
+    /**
+     * Removes the recurrence settings and restores the single-occurrence state for an appointment or task.
+     */
+    public void clearRecurrencePattern()
+    {
+        call("ClearRecurrencePattern");
+    }
+
+    /**
+     * Copies the item to the folder that is specified by the <code>destinationFolder</code> parameter and returns an object that represents the item created in the destination folder by the copy operation.
+     *
+     * @param destinationFolder the folder to which the item is copied
+     * @param copyOption        the user experience of the copy operation
+     * @return the object created in the destination folder as a result of the copy operation.
+     */
+    public OutlookAppointment copyTo(OutlookFolder destinationFolder, OutlookAppointmentCopyOption copyOption)
+    {
+        return new OutlookAppointment(callDispatch("CopyTo", destinationFolder, copyOption));
+    }
+
+    /**
+     * Creates a AppointmentItem and attaches the contact information in vCard format.
+     *
+     * @return the new appointment item to which the contact information is attached.
+     */
+    public OutlookAppointment forwardAsVcard()
+    {
+        return new OutlookAppointment(callDispatch("ForwardAsVcard"));
+    }
+
+    /**
+     * Obtains the AddressEntry object that contains information from the Address Book about the organizer of the AppointmentItem.
+     *
+     * @return the organizer of the AppointmentItem.
+     */
+    public OutlookAddressEntry getOrganizerAddress()
+    {
+        return new OutlookAddressEntry(callDispatch("GetOrganizer"));
+    }
+
+    /**
+     * Responds to a meeting request.
+     *
+     * @param response the response to the request
+     * @return A MeetingItem object that represents the response to the meeting request.
+     */
+    public OutlookMeeting respond(OutlookMeetingResponse response)
+    {
+        return new OutlookMeeting(callDispatch("Respond", response));
+    }
+
+    /**
+     * Responds to a meeting request.
+     *
+     * @param response             the response to the request
+     * @param noUI                 <code>true</code> to not display a dialog box; the response is sent automatically. <code>false</code> to display the dialog box for responding.
+     * @param additionalTextDialog <code>false</code> to not prompt the user for input; the response is displayed in the inspector for editing. <code>true</code> to prompt the user to either send or send with comments. This argument is valid only if <code>NoUI</code> is <code>false</code>.
+     * @return A MeetingItem object that represents the response to the meeting request.
+     */
+    public OutlookMeeting respond(OutlookMeetingResponse response, boolean noUI, boolean additionalTextDialog)
+    {
+        return new OutlookMeeting(callDispatch("Respond", response, noUI, additionalTextDialog));
+    }
+
+    /**
+     * Sends the appointment.
+     */
+    public void send()
+    {
+        call("Send");
+    }
 
     /* *****************************************************
      *                                                     *
