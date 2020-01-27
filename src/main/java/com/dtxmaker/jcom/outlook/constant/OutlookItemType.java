@@ -15,16 +15,11 @@ public enum OutlookItemType implements TypedConstant<OutlookItem>
     JOURNAL(4, OutlookJournal.class),
     NOTE(5, OutlookNote.class),
     POST(6, OutlookPost.class),
-    DISTRIBUTION_LIST(7),
+    DISTRIBUTION_LIST(7, OutlookDistList.class),
     ;
 
     private final int                          value;
     private final Class<? extends OutlookItem> type;
-
-    OutlookItemType(int value)
-    {
-        this(value, OutlookItem.class);
-    }
 
     OutlookItemType(int value, Class<? extends OutlookItem> type)
     {

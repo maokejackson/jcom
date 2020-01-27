@@ -56,7 +56,7 @@ public enum OutlookObjectClass implements TypedConstant<Outlook>
     CONTACTS_MODULE(160),
     CONVERSATION(178),
     CONVERSATION_HEADER(182),
-    DISTRIBUTION_LIST(69),
+    DISTRIBUTION_LIST(69, OutlookDistList.class),
     DOCUMENT(41),
     EXCEPTION(30),
     EXCEPTIONS(29),
