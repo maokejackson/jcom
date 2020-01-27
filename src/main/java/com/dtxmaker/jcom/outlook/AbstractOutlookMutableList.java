@@ -3,7 +3,7 @@ package com.dtxmaker.jcom.outlook;
 import com.dtxmaker.jcom.MutableList;
 import com.jacob.com.Dispatch;
 
-public abstract class AbstractOutlookMutableList<T extends Outlook> extends Outlook implements MutableList<T>
+public abstract class AbstractOutlookMutableList<T extends Outlook, V> extends Outlook implements MutableList<T, V>
 {
     AbstractOutlookMutableList(Dispatch dispatch)
     {

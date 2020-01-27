@@ -7,7 +7,7 @@ import lombok.SneakyThrows;
 /**
  * https://docs.microsoft.com/en-us/office/vba/api/outlook.items
  */
-public class OutlookItems extends AbstractOutlookIterableList<OutlookItem>
+public class OutlookItems extends AbstractOutlookIterableList<OutlookItem, String>
 {
     OutlookItems(Dispatch dispatch)
     {
@@ -34,6 +34,18 @@ public class OutlookItems extends AbstractOutlookIterableList<OutlookItem>
     public OutlookItem add()
     {
         return new OutlookItem(callDispatch("Add"));
+    }
+
+    /**
+     * Creates a new Outlook item in the Items collection for the folder.
+     *
+     * @param messageClass The Outlook item type for the new item.
+     * @return An Object value that represents the new Outlook item.
+     */
+    @Override
+    public OutlookItem add(String messageClass)
+    {
+        return new OutlookItem(callDispatch("Add", messageClass));
     }
 
     /**

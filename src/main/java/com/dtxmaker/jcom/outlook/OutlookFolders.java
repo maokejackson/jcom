@@ -6,7 +6,7 @@ import com.jacob.com.Dispatch;
 /**
  * https://docs.microsoft.com/en-us/office/vba/api/outlook.folders
  */
-public class OutlookFolders extends AbstractOutlookIterableList<OutlookFolder>
+public class OutlookFolders extends AbstractOutlookIterableList<OutlookFolder, String>
 {
     OutlookFolders(Dispatch dispatch)
     {

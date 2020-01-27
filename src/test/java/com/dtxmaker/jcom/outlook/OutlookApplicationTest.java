@@ -86,6 +86,7 @@ public class OutlookApplicationTest
         OutlookItem item = folder.getItems().getItem(1);
 
         assertEquals(OutlookObjectClass.MAIL, item.getObjectClass());
+        assertEquals("IPM.Note", item.getMessageClass());
     }
 
     @Test
@@ -95,5 +96,6 @@ public class OutlookApplicationTest
         OutlookItem item = folder.getItems().getItem(1);
 
         assertEquals(OutlookObjectClass.CONTACT, item.getObjectClass());
+        assertEquals("IPM.Contact", item.getMessageClass());
     }
 }

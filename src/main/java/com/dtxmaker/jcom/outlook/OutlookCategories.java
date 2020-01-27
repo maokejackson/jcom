@@ -8,7 +8,7 @@ import com.jacob.com.Dispatch;
  * @see <a href="https://docs.microsoft.com/en-us/office/vba/api/outlook.categories">
  * https://docs.microsoft.com/en-us/office/vba/api/outlook.categories</a>
  */
-public class OutlookCategories extends AbstractOutlookMutableList<OutlookCategory>
+public class OutlookCategories extends AbstractOutlookMutableList<OutlookCategory, String>
 {
     OutlookCategories(Dispatch dispatch)
     {
@@ -27,6 +27,7 @@ public class OutlookCategories extends AbstractOutlookMutableList<OutlookCategor
      * @param name The name of the new category.
      * @return A Category object that represents the new category.
      */
+    @Override
     public OutlookCategory add(String name)
     {
         return new OutlookCategory(callDispatch("Add", name));

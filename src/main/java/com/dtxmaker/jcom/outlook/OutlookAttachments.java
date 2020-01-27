@@ -8,7 +8,7 @@ import com.jacob.com.Dispatch;
  * @see <a href="https://docs.microsoft.com/en-us/office/vba/api/outlook.attachments">
  * https://docs.microsoft.com/en-us/office/vba/api/outlook.attachments</a>
  */
-public class OutlookAttachments extends AbstractOutlookMutableList<OutlookAttachment>
+public class OutlookAttachments extends AbstractOutlookMutableList<OutlookAttachment, String>
 {
     OutlookAttachments(Dispatch dispatch)
     {
@@ -27,6 +27,7 @@ public class OutlookAttachments extends AbstractOutlookMutableList<OutlookAttach
      * @param source The source of the attachment. This can be a file (represented by the full file system path with a file name) or an Outlook item that constitutes the attachment.
      * @return An Attachment object that represents the new attachment.
      */
+    @Override
     public OutlookAttachment add(String source)
     {
         return new OutlookAttachment(callDispatch("Add", source));

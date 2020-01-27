@@ -185,6 +185,14 @@ public class OutlookItem extends Outlook
     }
 
     /**
+     * Returns the download state of the item.
+     */
+    public final OutlookDownloadState getDownloadState()
+    {
+        return getConstant("DownloadState", OutlookDownloadState.class);
+    }
+
+    /**
      * Returns the unique Entry ID of the object.
      */
     public final String getEntryId()

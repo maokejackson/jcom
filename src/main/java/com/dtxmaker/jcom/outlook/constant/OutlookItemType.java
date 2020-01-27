@@ -12,9 +12,9 @@ public enum OutlookItemType implements Constant
     APPOINTMENT(1, OutlookAppointment.class),
     CONTACT(2, OutlookContact.class),
     TASK(3, OutlookTask.class),
-    JOURNAL(4),
-    NOTE(5),
-    POST(6),
+    JOURNAL(4, OutlookJournal.class),
+    NOTE(5, OutlookNote.class),
+    POST(6, OutlookPost.class),
     DISTRIBUTION_LIST(7),
     ;
 

@@ -5,7 +5,7 @@ import com.jacob.com.Dispatch;
 
 import java.util.Optional;
 
-public abstract class AbstractOutlookIterableList<T extends Outlook> extends AbstractOutlookMutableList<T>
+public abstract class AbstractOutlookIterableList<T extends Outlook, V> extends AbstractOutlookMutableList<T, V>
         implements IterableList<T>
 {
     AbstractOutlookIterableList(Dispatch dispatch)

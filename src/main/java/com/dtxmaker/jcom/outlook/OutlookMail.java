@@ -184,11 +184,6 @@ public class OutlookMail extends OutlookItem
         return getBoolean("DeleteAfterSubmit");
     }
 
-    public OutlookDownloadState getDownloadState()
-    {
-        return getConstant("DownloadState", OutlookDownloadState.class);
-    }
-
     public void setExpiryTime(Date expiryTime)
     {
         put("ExpiryTime", expiryTime);

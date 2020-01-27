@@ -8,7 +8,7 @@ import com.jacob.com.Dispatch;
  * @see <a href="https://docs.microsoft.com/en-us/office/vba/api/outlook.recipients">
  * https://docs.microsoft.com/en-us/office/vba/api/outlook.recipients</a>
  */
-public class OutlookRecipients extends AbstractOutlookMutableList<OutlookRecipient>
+public class OutlookRecipients extends AbstractOutlookMutableList<OutlookRecipient, String>
 {
     OutlookRecipients(Dispatch dispatch)
     {
@@ -27,6 +27,7 @@ public class OutlookRecipients extends AbstractOutlookMutableList<OutlookRecipie
      * @param name The name of the recipient; it can be a string representing the display name, the alias, or the full SMTP email address of the recipient.
      * @return A Recipient object that represents the new recipient.
      */
+    @Override
     public OutlookRecipient add(String name)
     {
         return new OutlookRecipient(callDispatch("Add", name));
