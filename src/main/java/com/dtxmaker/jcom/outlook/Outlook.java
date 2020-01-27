@@ -4,7 +4,7 @@ import com.dtxmaker.jcom.Base;
 import com.dtxmaker.jcom.outlook.constant.OutlookObjectClass;
 import com.jacob.com.Dispatch;
 
-abstract class Outlook extends Base
+public abstract class Outlook extends Base
 {
     Outlook(Dispatch dispatch)
     {

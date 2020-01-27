@@ -1,12 +1,12 @@
 package com.dtxmaker.jcom.outlook.constant;
 
-import com.dtxmaker.jcom.Constant;
+import com.dtxmaker.jcom.TypedConstant;
 import com.dtxmaker.jcom.outlook.*;
 import com.dtxmaker.jcom.util.EnumUtils;
 
 import java.util.Arrays;
 
-public enum OutlookItemType implements Constant
+public enum OutlookItemType implements TypedConstant<OutlookItem>
 {
     MAIL(0, OutlookMail.class),
     APPOINTMENT(1, OutlookAppointment.class),
@@ -38,6 +38,7 @@ public enum OutlookItemType implements Constant
         return value;
     }
 
+    @Override
     public Class<? extends OutlookItem> getType()
     {
         return type;
