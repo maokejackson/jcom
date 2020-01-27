@@ -45,6 +45,24 @@ public class OutlookItem extends Outlook
     }
 
     /**
+     * Displays a new Inspector object for the item.
+     */
+    public final void display()
+    {
+        call("Display");
+    }
+
+    /**
+     * Displays a new Inspector object for the item.
+     *
+     * @param modal <code>true</code> to make the window modal.
+     */
+    public final void display(boolean modal)
+    {
+        call("Display", modal);
+    }
+
+    /**
      * Moves a Microsoft Outlook item to a new <code>folder</code>.
      *
      * @param folder the destination folder
