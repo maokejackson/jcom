@@ -97,6 +97,30 @@ public class OutlookApplication extends Outlook
     }
 
     /**
+     * Creates and returns a new Microsoft Journal item.
+     */
+    public OutlookJournal createJournal()
+    {
+        return new OutlookJournal(createItem(JOURNAL));
+    }
+
+    /**
+     * Creates and returns a new Microsoft Post item.
+     */
+    public OutlookPost createPost()
+    {
+        return new OutlookPost(createItem(POST));
+    }
+
+    /**
+     * Creates and returns a new Microsoft Note item.
+     */
+    public OutlookNote createNote()
+    {
+        return new OutlookNote(createItem(NOTE));
+    }
+
+    /**
      * Returns a NameSpace object of the specified type.
      *
      * @return A NameSpace object that represents the specified namespace.

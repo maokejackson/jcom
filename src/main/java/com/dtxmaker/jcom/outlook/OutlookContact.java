@@ -11,7 +11,7 @@ import java.util.Date;
  * @see <a href="https://docs.microsoft.com/en-us/office/vba/api/outlook.contactitem">
  * https://docs.microsoft.com/en-us/office/vba/api/outlook.contactitem</a>
  */
-public class OutlookContact extends OutlookItem
+public class OutlookContact extends AbstractOutlookInternalItem
 {
     OutlookContact(Dispatch dispatch)
     {
@@ -190,16 +190,6 @@ public class OutlookContact extends OutlookItem
         return getString("AssistantTelephoneNumber");
     }
 
-    public void setBillingInformation(String billingInformation)
-    {
-        put("BillingInformation", billingInformation);
-    }
-
-    public String getBillingInformation()
-    {
-        return getString("BillingInformation");
-    }
-
     public void setBirthday(Date birthday)
     {
         put("Birthday", birthday);
@@ -363,16 +353,6 @@ public class OutlookContact extends OutlookItem
     public String getChildren()
     {
         return getString("Children");
-    }
-
-    public void setCompanies(String companies)
-    {
-        put("Companies", companies);
-    }
-
-    public String getCompanies()
-    {
-        return getString("Companies");
     }
 
     public String getCompanyAndFullName()
@@ -560,11 +540,19 @@ public class OutlookContact extends OutlookItem
         return getString("Email3EntryID");
     }
 
+    /**
+     * Sets the default keyword string assigned to the contact when it is filed.
+     *
+     * @param fileAs the default keyword string assigned to the contact when it is filed
+     */
     public void setFileAs(String fileAs)
     {
         put("FileAs", fileAs);
     }
 
+    /**
+     * Returns the default keyword string assigned to the contact when it is filed.
+     */
     public String getFileAs()
     {
         return getString("FileAs");
@@ -780,6 +768,9 @@ public class OutlookContact extends OutlookItem
         return getString("ISDNNumber");
     }
 
+    /**
+     * Indicates whether the item is marked as a task.
+     */
     public boolean isMarkedAsTask()
     {
         return getBoolean("IsMarkedAsTask");
@@ -1160,6 +1151,78 @@ public class OutlookContact extends OutlookItem
         return getString("ReferredBy");
     }
 
+    /**
+     * Sets if the reminder overrides the default reminder behavior for the item.
+     *
+     * @param reminderOverrideDefault <code>true</code> if the reminder overrides the default reminder.
+     */
+    public void setReminderOverrideDefault(boolean reminderOverrideDefault)
+    {
+        put("ReminderOverrideDefault", reminderOverrideDefault);
+    }
+
+    /**
+     * Returns <code>true</code> if the reminder overrides the default reminder behavior for the item.
+     */
+    public boolean isReminderOverrideDefault()
+    {
+        return getBoolean("ReminderOverrideDefault");
+    }
+
+    /**
+     * Sets if the reminder should play a sound when it occurs for this item.
+     *
+     * @param reminderPlaySound <code>true</code> if the reminder should play a sound.
+     */
+    public final void setReminderPlaySound(boolean reminderPlaySound)
+    {
+        put("ReminderPlaySound", reminderPlaySound);
+    }
+
+    /**
+     * Returns <code>true</code> if the reminder should play a sound when it occurs for this item.
+     */
+    public final boolean isReminderPlaySound()
+    {
+        return getBoolean("ReminderPlaySound");
+    }
+
+    /**
+     * Sets if a reminder has been set for this item.
+     *
+     * @param reminderSet <code>true</code> if a reminder has been set.
+     */
+    public final void setReminderSet(boolean reminderSet)
+    {
+        put("ReminderSet", reminderSet);
+    }
+
+    /**
+     * Returns <code>true</code> if a reminder has been set for this item.
+     */
+    public final boolean getReminderSet()
+    {
+        return getBoolean("ReminderSet");
+    }
+
+    /**
+     * Sets the path and file name of the sound file to play when the reminder occurs for the Outlook item.
+     *
+     * @param reminderSoundFile the path and file name of the sound file.
+     */
+    public final void setReminderSoundFile(String reminderSoundFile)
+    {
+        put("ReminderSoundFile", reminderSoundFile);
+    }
+
+    /**
+     * Returns the path and file name of the sound file to play when the reminder occurs for the Outlook item.
+     */
+    public final String getReminderSoundFile()
+    {
+        return getString("ReminderSoundFile");
+    }
+
     public void setReminderTime(Date reminderTime)
     {
         put("ReminderTime", reminderTime);
@@ -1210,41 +1273,73 @@ public class OutlookContact extends OutlookItem
         return getString("Suffix");
     }
 
+    /**
+     * Sets the completion date of the task for this item.
+     *
+     * @param taskCompletedDate the completion date
+     */
     public void setTaskCompletedDate(Date taskCompletedDate)
     {
         put("TaskCompletedDate", taskCompletedDate);
     }
 
+    /**
+     * Returns the completion date of the task for this item.
+     */
     public Date getTaskCompletedDate()
     {
         return getDate("TaskCompletedDate");
     }
 
+    /**
+     * Sets the due date of the task for this item.
+     *
+     * @param taskDueDate the due date
+     */
     public void setTaskDueDate(Date taskDueDate)
     {
         put("TaskDueDate", taskDueDate);
     }
 
+    /**
+     * Returns the due date of the task for this item.
+     */
     public Date getTaskDueDate()
     {
         return getDate("TaskDueDate");
     }
 
+    /**
+     * Sets the start date of the task for this item.
+     *
+     * @param taskStartDate the start date
+     */
     public void setTaskStartDate(Date taskStartDate)
     {
         put("TaskStartDate", taskStartDate);
     }
 
+    /**
+     * Returns the start date of the task for this item.
+     */
     public Date getTaskStartDate()
     {
         return getDate("TaskStartDate");
     }
 
+    /**
+     * Sets the subject of the task for the item.
+     *
+     * @param taskSubject the subject
+     */
     public void setTaskSubject(String taskSubject)
     {
         put("TaskSubject", taskSubject);
     }
 
+    /**
+     * Returns the subject of the task for the item.
+     */
     public String getTaskSubject()
     {
         return getString("TaskSubject");
@@ -1270,11 +1365,19 @@ public class OutlookContact extends OutlookItem
         return getString("Title");
     }
 
+    /**
+     * Sets the ordinal value of the task for the item.
+     *
+     * @param toDoTaskOrdinal the ordinal value of the task
+     */
     public void setToDoTaskOrdinal(Date toDoTaskOrdinal)
     {
         put("ToDoTaskOrdinal", toDoTaskOrdinal);
     }
 
+    /**
+     * Returns the ordinal value of the task for the item.
+     */
     public Date getToDoTaskOrdinal()
     {
         return getDate("ToDoTaskOrdinal");
