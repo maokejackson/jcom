@@ -3,24 +3,20 @@ package com.dtxmaker.jcom.outlook;
 import com.dtxmaker.jcom.outlook.constant.OutlookDefaultFolderType;
 import com.jacob.com.Dispatch;
 
-import java.util.Optional;
-
 /**
  * https://docs.microsoft.com/en-us/office/vba/api/outlook.folders
  */
-public class OutlookFolders extends Outlook
+public class OutlookFolders extends AbstractOutlookIterableList<OutlookFolder>
 {
     OutlookFolders(Dispatch dispatch)
     {
         super(dispatch);
     }
 
-    private OutlookFolder getFolder(String method)
+    @Override
+    OutlookFolder newInstance(Dispatch dispatch)
     {
-        return Optional.ofNullable(call(method))
-                .filter(variant -> !variant.isNull())
-                .map(variant -> new OutlookFolder(variant.getDispatch()))
-                .orElse(null);
+        return new OutlookFolder(dispatch);
     }
 
     /* *****************************************************
@@ -53,85 +49,14 @@ public class OutlookFolders extends Outlook
     }
 
     /**
-     * Returns the first object in the Folders collection.
-     *
-     * @return A Folder object that represents the first object contained by the collection.
-     */
-    public OutlookFolder getFirst()
-    {
-        return getFolder("GetFirst");
-    }
-
-    /**
-     * Returns the last object in the Folders collection.
-     *
-     * @return A Folder object that represents the last object contained by the collection.
-     */
-    public OutlookFolder getLast()
-    {
-        return getFolder("GetLast");
-    }
-
-    /**
-     * Returns the next object in the Folders collection.
-     *
-     * @return A Folder object that represents the next object contained by the collection.
-     */
-    public OutlookFolder getNext()
-    {
-        return getFolder("GetNext");
-    }
-
-    /**
-     * Returns the previous object in the Folders collection.
-     *
-     * @return A Folder object that represents the previous object contained by the collection.
-     */
-    public OutlookFolder getPrevious()
-    {
-        return getFolder("GetPrevious");
-    }
-
-    /**
      * Returns a Folder object from the collection.
      *
      * @param index Either the index number of the object, or a value used to match the default property of an object in the collection.
      * @return A Folder object that represents the specified object.
      */
+    @Override
     public OutlookFolder getItem(int index)
     {
         return new OutlookFolder(callDispatch("Item", index));
-    }
-
-    /**
-     * Removes an object from the collection.
-     *
-     * @param index The 1-based index value of the object within the collection.
-     */
-    public void remove(int index)
-    {
-        call("Remove", index);
-    }
-
-    /**
-     * Remove all objects from the collection.
-     */
-    public void removeAll()
-    {
-        for (int index = getCount(); index >= 1; index--)
-        {
-            remove(index);
-        }
-    }
-
-    /* *****************************************************
-     *                                                     *
-     *                      Properties                     *
-     *                                                     *
-     *******************************************************/
-
-    public int getCount()
-    {
-        return getInt("Count");
     }
 }

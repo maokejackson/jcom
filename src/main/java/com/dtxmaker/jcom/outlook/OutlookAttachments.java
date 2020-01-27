@@ -8,7 +8,7 @@ import com.jacob.com.Dispatch;
  * @see <a href="https://docs.microsoft.com/en-us/office/vba/api/outlook.attachments">
  * https://docs.microsoft.com/en-us/office/vba/api/outlook.attachments</a>
  */
-public class OutlookAttachments extends Outlook
+public class OutlookAttachments extends AbstractOutlookMutableList<OutlookAttachment>
 {
     OutlookAttachments(Dispatch dispatch)
     {
@@ -38,43 +38,9 @@ public class OutlookAttachments extends Outlook
      * @param index Either the index number of the object, or a value used to match the default property of an object in the collection.
      * @return An Attachment object that represents the specified object.
      */
+    @Override
     public OutlookAttachment getItem(int index)
     {
         return new OutlookAttachment(callDispatch("Item", index));
-    }
-
-    /**
-     * Removes an object from the collection.
-     *
-     * @param index The 1-based index value of the object within the collection.
-     */
-    public void remove(int index)
-    {
-        call("Remove", index);
-    }
-
-    /**
-     * Remove all objects from the collection.
-     */
-    public void removeAll()
-    {
-        for (int index = getCount(); index >= 1; index--)
-        {
-            remove(index);
-        }
-    }
-
-    /* *****************************************************
-     *                                                     *
-     *                      Properties                     *
-     *                                                     *
-     *******************************************************/
-
-    /**
-     * Returns the count of objects in the specified collection.
-     */
-    public int getCount()
-    {
-        return getInt("Count");
     }
 }

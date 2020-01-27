@@ -8,7 +8,7 @@ import com.jacob.com.Dispatch;
  * @see <a href="https://docs.microsoft.com/en-us/office/vba/api/outlook.categories">
  * https://docs.microsoft.com/en-us/office/vba/api/outlook.categories</a>
  */
-public class OutlookCategories extends Outlook
+public class OutlookCategories extends AbstractOutlookMutableList<OutlookCategory>
 {
     OutlookCategories(Dispatch dispatch)
     {
@@ -38,6 +38,7 @@ public class OutlookCategories extends Outlook
      * @param index A Long value representing the index number of the object in the collection.
      * @return A Category object that represents the specified object.
      */
+    @Override
     public OutlookCategory getItem(int index)
     {
         return new OutlookCategory(callDispatch("Item", index));
@@ -57,45 +58,10 @@ public class OutlookCategories extends Outlook
     /**
      * Removes an object from the collection.
      *
-     * @param index A Long value representing the index number of the object in the collection.
-     */
-    public void remove(int index)
-    {
-        call("Remove", index);
-    }
-
-    /**
-     * Removes an object from the collection.
-     *
      * @param name A String value representing either the Name or CategoryID property value of an object in the collection.
      */
     public void remove(String name)
     {
         call("Remove", name);
-    }
-
-    /**
-     * Remove all objects from the collection.
-     */
-    public void removeAll()
-    {
-        for (int index = getCount(); index >= 1; index--)
-        {
-            remove(index);
-        }
-    }
-
-    /* *****************************************************
-     *                                                     *
-     *                      Properties                     *
-     *                                                     *
-     *******************************************************/
-
-    /**
-     * Returns an {@code int} value indicating the count of Category objects in the specified collection.
-     */
-    public int getCount()
-    {
-        return getInt("Count");
     }
 }

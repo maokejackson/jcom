@@ -4,24 +4,20 @@ import com.dtxmaker.jcom.outlook.constant.OutlookItemType;
 import com.jacob.com.Dispatch;
 import lombok.SneakyThrows;
 
-import java.util.Optional;
-
 /**
  * https://docs.microsoft.com/en-us/office/vba/api/outlook.items
  */
-public class OutlookItems extends Outlook
+public class OutlookItems extends AbstractOutlookIterableList<OutlookItem>
 {
     OutlookItems(Dispatch dispatch)
     {
         super(dispatch);
     }
 
-    private OutlookItem getItem(String method, Object... args)
+    @Override
+    OutlookItem newInstance(Dispatch dispatch)
     {
-        return Optional.ofNullable(call(method, args))
-                .filter(variant -> !variant.isNull())
-                .map(variant -> new OutlookItem(variant.getDispatch()))
-                .orElse(null);
+        return new OutlookItem(dispatch);
     }
 
     /* *****************************************************
@@ -77,75 +73,15 @@ public class OutlookItems extends Outlook
     }
 
     /**
-     * Returns the first object in the collection.
-     *
-     * @return An Object value that represents the first object contained by the collection.
-     */
-    public OutlookItem getFirst()
-    {
-        return getItem("GetFirst");
-    }
-
-    /**
-     * Returns the last object in the collection.
-     *
-     * @return An Object value that represents the last object contained by the collection.
-     */
-    public OutlookItem getLast()
-    {
-        return getItem("GetLast");
-    }
-
-    /**
-     * Returns the next object in the collection.
-     *
-     * @return An Object value that represents the next object contained by the collection.
-     */
-    public OutlookItem getNext()
-    {
-        return getItem("GetNext");
-    }
-
-    /**
-     * Returns the previous object in the collection.
-     *
-     * @return An Object value that represents the previous object contained by the collection.
-     */
-    public OutlookItem getPrevious()
-    {
-        return getItem("GetPrevious");
-    }
-
-    /**
      * Returns an Outlook item from a collection.
      *
      * @param index Either the index number of the object, or a value used to match the default property of an object in the collection.
      * @return An Object value that represents the specified object.
      */
+    @Override
     public OutlookItem getItem(int index)
     {
         return new OutlookItem(callDispatch("Item", index));
-    }
-
-    /**
-     * Removes an object from the collection.
-     *
-     * @param index The 1-based index value of the object within the collection.
-     */
-    public void remove(int index)
-    {
-        call("Remove", index);
-    }
-
-    /**
-     * Remove all objects from the collection.
-     */
-    public void removeAll()
-    {
-        for (int index = getCount(); index >= 1; index--)
-        {
-            remove(index);
-        }
     }
 
     /**
@@ -196,16 +132,5 @@ public class OutlookItems extends Outlook
     public void sort(String property, boolean descending)
     {
         call("Sort", property, descending);
-    }
-
-    /* *****************************************************
-     *                                                     *
-     *                      Properties                     *
-     *                                                     *
-     *******************************************************/
-
-    public int getCount()
-    {
-        return getInt("Count");
     }
 }

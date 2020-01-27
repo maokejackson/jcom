@@ -1,5 +1,6 @@
 package com.dtxmaker.jcom.outlook;
 
+import com.dtxmaker.jcom.ImmutableList;
 import com.jacob.com.Dispatch;
 
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.Date;
  * @see <a href="https://docs.microsoft.com/en-us/office/vba/api/outlook.timezones">
  * https://docs.microsoft.com/en-us/office/vba/api/outlook.timezones</a>
  */
-public class OutlookTimeZones extends Outlook
+public class OutlookTimeZones extends Outlook implements ImmutableList<OutlookTimeZone>
 {
     OutlookTimeZones(Dispatch dispatch)
     {
@@ -42,6 +43,7 @@ public class OutlookTimeZones extends Outlook
      * @param index An Integer representing a 1-based index into the TimeZones collection.
      * @return A TimeZone object that represents the specified object in the collection.
      */
+    @Override
     public OutlookTimeZone getItem(int index)
     {
         return new OutlookTimeZone(callDispatch("Item", index));
@@ -53,9 +55,7 @@ public class OutlookTimeZones extends Outlook
      *                                                     *
      *******************************************************/
 
-    /**
-     * @return a int indicating the count of objects in the specified collection.
-     */
+    @Override
     public int getCount()
     {
         return getInt("Count");
