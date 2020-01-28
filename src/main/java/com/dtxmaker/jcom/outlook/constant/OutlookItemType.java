@@ -4,8 +4,6 @@ import com.dtxmaker.jcom.TypedConstant;
 import com.dtxmaker.jcom.outlook.*;
 import com.dtxmaker.jcom.util.EnumUtils;
 
-import java.util.Arrays;
-
 public enum OutlookItemType implements TypedConstant<OutlookItem>
 {
     MAIL(0, OutlookMail.class),
@@ -46,18 +44,11 @@ public enum OutlookItemType implements TypedConstant<OutlookItem>
 
     public static OutlookItemType findByType(Class<? extends OutlookItem> type)
     {
-        return Arrays.stream(values())
-                .filter(object -> object.getType() == type)
-                .findFirst()
-                .orElse(null);
+        return EnumUtils.findByType(OutlookItemType.class, type);
     }
 
     public static int findValueByType(Class<? extends OutlookItem> type)
     {
-        return Arrays.stream(values())
-                .filter(object -> object.getType() == type)
-                .findFirst()
-                .orElse(MAIL)
-                .getValue();
+        return EnumUtils.findValueByType(OutlookItemType.class, type, MAIL);
     }
 }

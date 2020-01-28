@@ -4,8 +4,6 @@ import com.dtxmaker.jcom.TypedConstant;
 import com.dtxmaker.jcom.outlook.*;
 import com.dtxmaker.jcom.util.EnumUtils;
 
-import java.util.Arrays;
-
 /**
  * Specifies constants that represent the different Microsoft Outlook object classes.
  *
@@ -197,9 +195,6 @@ public enum OutlookObjectClass implements TypedConstant<Outlook>
 
     public static OutlookObjectClass findByType(Class<? extends Outlook> type)
     {
-        return Arrays.stream(values())
-                .filter(object -> object.getType() == type)
-                .findFirst()
-                .orElse(null);
+        return EnumUtils.findByType(OutlookObjectClass.class, type);
     }
 }
