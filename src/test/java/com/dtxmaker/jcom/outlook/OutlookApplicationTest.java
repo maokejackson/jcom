@@ -86,8 +86,13 @@ public class OutlookApplicationTest
 
         for (OutlookItem item : folder.getItems())
         {
-            assertEquals(OutlookObjectClass.MAIL, item.getObjectClass());
+            assertTrue(item.isMail());
             assertEquals("IPM.Note", item.getMessageClass());
+
+            OutlookMail mail = item.cast(OutlookMail.class);
+            System.out.println(mail.getTo());
+            System.out.println(mail.getSubject());
+            System.out.println(mail.getBody());
         }
     }
 
@@ -98,8 +103,13 @@ public class OutlookApplicationTest
 
         for (OutlookItem item : folder.getItems())
         {
-            assertEquals(OutlookObjectClass.CONTACT, item.getObjectClass());
+            assertTrue(item.isContact());
             assertEquals("IPM.Contact", item.getMessageClass());
+
+            OutlookContact contact = item.cast(OutlookContact.class);
+            System.out.println(contact.getFirstName());
+            System.out.println(contact.getLastName());
+            System.out.println(contact.getBirthday());
         }
     }
 }

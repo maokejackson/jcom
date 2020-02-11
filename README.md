@@ -8,15 +8,14 @@ Read all contacts in Outlook.
 ```Java
 
 OutlookApplication outlook = new OutlookApplication();
-OutlookFolder folder = outlook.getFolder(OutlookDefaultFolder.CONTACTS);
-List<OutlookContact> contacts = folder.getItems(OutlookContact.class);
+OutlookFolder folder = outlook.getNameSpace().getFolder(OutlookDefaultFolder.CONTACTS);
 
-for (OutlookContact contact : contacts)
+for (OutlookItem item : folder.getItems())
 {
+    OutlookContact contact = item.cast(OutlookContact.class);
     System.out.println(contact.getFirstName());
     System.out.println(contact.getLastName());
     System.out.println(contact.getBirthday());
-    System.out.println(contact.getNotes());
 }
 ```
 Create and send a mail in Outlook.
@@ -28,7 +27,7 @@ mail.setTo("someone@somewhere.net");
 mail.setHtmlBody("<html><body>A test mail.</body></html>");
 mail.setBodyFormat(OutlookBodyFormat.HTML);
 mail.setImportance(OutlookImportance.HIGH);
-mail.attachFile("D:\\tmp\\licenses.xml");
+mail.getAttachments().add("C:\\folder\\filename.txt");
 
 mail.save(); // save mail in draft
 mail.send(); // send mail automatically

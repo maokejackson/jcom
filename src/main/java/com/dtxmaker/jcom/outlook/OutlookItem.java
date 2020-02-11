@@ -1,10 +1,8 @@
 package com.dtxmaker.jcom.outlook;
 
-import com.dtxmaker.jcom.outlook.constant.OutlookDownloadState;
-import com.dtxmaker.jcom.outlook.constant.OutlookInspectorClose;
-import com.dtxmaker.jcom.outlook.constant.OutlookRemoteStatus;
-import com.dtxmaker.jcom.outlook.constant.OutlookSaveAsType;
+import com.dtxmaker.jcom.outlook.constant.*;
 import com.jacob.com.Dispatch;
+import lombok.SneakyThrows;
 
 import java.util.Date;
 
@@ -13,6 +11,59 @@ public class OutlookItem extends Outlook
     OutlookItem(Dispatch dispatch)
     {
         super(dispatch);
+    }
+
+    @SneakyThrows
+    public <T extends OutlookItem> T cast(Class<T> type)
+    {
+        OutlookObjectClass objectClass = OutlookObjectClass.findByType(type);
+
+        if (objectClass != getObjectClass())
+        {
+            throw new ClassCastException("Cannot cast OutlookItem to " + objectClass);
+        }
+
+        return type.getDeclaredConstructor(Dispatch.class).newInstance(getDispatch());
+    }
+
+    public boolean isAppointment()
+    {
+        return getObjectClass() == OutlookObjectClass.APPOINTMENT;
+    }
+
+    public boolean isContact()
+    {
+        return getObjectClass() == OutlookObjectClass.CONTACT;
+    }
+
+    public boolean isDistributionList()
+    {
+        return getObjectClass() == OutlookObjectClass.DISTRIBUTION_LIST;
+    }
+
+    public boolean isJournal()
+    {
+        return getObjectClass() == OutlookObjectClass.JOURNAL;
+    }
+
+    public boolean isMail()
+    {
+        return getObjectClass() == OutlookObjectClass.MAIL;
+    }
+
+    public boolean isNote()
+    {
+        return getObjectClass() == OutlookObjectClass.NOTE;
+    }
+
+    public boolean isPost()
+    {
+        return getObjectClass() == OutlookObjectClass.POST;
+    }
+
+    public boolean isTask()
+    {
+        return getObjectClass() == OutlookObjectClass.TASK;
     }
 
     /* *****************************************************

@@ -60,7 +60,7 @@ public class OutlookItems extends AbstractOutlookIterableList<OutlookItem, Strin
     {
         int value = OutlookItemType.findValueByType(type);
         Dispatch item = callDispatch("Add", value);
-        return type.getConstructor(Dispatch.class).newInstance(item);
+        return type.getDeclaredConstructor(Dispatch.class).newInstance(item);
     }
 
     /**
