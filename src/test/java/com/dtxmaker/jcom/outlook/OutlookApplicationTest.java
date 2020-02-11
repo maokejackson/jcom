@@ -76,26 +76,30 @@ public class OutlookApplicationTest
     @Test
     public void testGetVersion() throws Exception
     {
-        assertEquals("12.0.0.4518", outlook.getVersion());
+        assertEquals("12.0.0.6785", outlook.getVersion());
     }
 
     @Test
     public void testGetDrafts() throws Exception
     {
         OutlookFolder folder = outlook.getNamespace().getDefaultFolder(OutlookDefaultFolderType.DRAFTS);
-        OutlookItem item = folder.getItems().getItem(1);
 
-        assertEquals(OutlookObjectClass.MAIL, item.getObjectClass());
-        assertEquals("IPM.Note", item.getMessageClass());
+        for (OutlookItem item : folder.getItems())
+        {
+            assertEquals(OutlookObjectClass.MAIL, item.getObjectClass());
+            assertEquals("IPM.Note", item.getMessageClass());
+        }
     }
 
     @Test
     public void testGetContacts() throws Exception
     {
         OutlookFolder folder = outlook.getNamespace().getDefaultFolder(OutlookDefaultFolderType.CONTACTS);
-        OutlookItem item = folder.getItems().getItem(1);
 
-        assertEquals(OutlookObjectClass.CONTACT, item.getObjectClass());
-        assertEquals("IPM.Contact", item.getMessageClass());
+        for (OutlookItem item : folder.getItems())
+        {
+            assertEquals(OutlookObjectClass.CONTACT, item.getObjectClass());
+            assertEquals("IPM.Contact", item.getMessageClass());
+        }
     }
 }

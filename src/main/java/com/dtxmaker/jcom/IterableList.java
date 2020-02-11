@@ -1,6 +1,6 @@
 package com.dtxmaker.jcom;
 
-public interface IterableList<T>
+public interface IterableList<T> extends Iterable<T>
 {
     /**
      * Returns the first object in the collection.
