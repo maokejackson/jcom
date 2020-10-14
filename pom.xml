@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.dtxmaker</groupId>
-    <artifactId>jcom+</artifactId>
+    <artifactId>jcom</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -15,17 +15,16 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.hynnet</groupId>
+            <groupId>com.jacob</groupId>
             <artifactId>jacob</artifactId>
             <version>1.19</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/jacob.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.10</version>
             <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -34,5 +33,12 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>eteie</id>
+            <url>http://maven.eteie.com:8081/nexus/content/repositories/public/</url>
+        </repository>
+    </repositories>
 
 </project>
